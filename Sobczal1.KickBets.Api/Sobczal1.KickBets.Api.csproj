@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sobczal1.KickBets.Application\Sobczal1.KickBets.Application.csproj" />
+    <ProjectReference Include="..\Sobczal1.KickBets.Persistence\Sobczal1.KickBets.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

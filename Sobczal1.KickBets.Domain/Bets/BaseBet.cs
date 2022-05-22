@@ -1,4 +1,5 @@
-﻿using Sobczal1.KickBets.Domain.Fixtures;
+﻿using Sobczal1.KickBets.Domain.Football;
+using Sobczal1.KickBets.Domain.Identity;
 
 namespace Sobczal1.KickBets.Domain.Bets;
 
