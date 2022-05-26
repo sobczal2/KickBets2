@@ -4,7 +4,7 @@ public class Player : BaseDomainEntity
 {
     public string Name { get; set; } = null!;
     public int Number { get; set; }
-    public string Pos { get; set; } = null!;
+    public string? Pos { get; set; }
     public int? GridX { get; set; }
     public int? GridY { get; set; }
     public int LineupId { get; set; }

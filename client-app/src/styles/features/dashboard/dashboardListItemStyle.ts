@@ -27,8 +27,6 @@ export const dashboardListItemLongStatusStyle = {
 
 export const dashboardListItemTeamNameStyle = {
     fontSize: "2rem",
-    overflow: "clip",
-    whiteSpace: "nowrap",
 }
 
 export const dashboardListItemMiddleSectionStyle = {

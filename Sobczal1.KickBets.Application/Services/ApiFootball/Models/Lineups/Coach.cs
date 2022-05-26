@@ -8,8 +8,8 @@ public class Coach
     public int Id { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; set; } = null!;
+    public string? Name { get; set; } = null!;
 
     [JsonPropertyName("photo")]
-    public string Photo { get; set; } = null!;
+    public string? Photo { get; set; } = null!;
 }

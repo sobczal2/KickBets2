@@ -14,7 +14,7 @@ public class RegisterDtoValidator : AbstractValidator<RegisterDto>
             .MinimumLength(5)
             .MustAsync(async (username, cancellationToken) =>
             {
-                return !await userManager.Users.AnyAsync(u => string.Equals(u.UserName, username, StringComparison.CurrentCultureIgnoreCase));
+                return !await userManager.Users.AnyAsync(u => u.UserName.ToUpper() == username.ToUpper());
             })
             .WithMessage("User with {PropertyName} {PropertyValue} already exists");
         
@@ -23,7 +23,7 @@ public class RegisterDtoValidator : AbstractValidator<RegisterDto>
             .EmailAddress()
             .MustAsync(async (email, cancellationToken) =>
             {
-                return !await userManager.Users.AnyAsync(u => string.Equals(u.Email, email, StringComparison.CurrentCultureIgnoreCase));
+                return !await userManager.Users.AnyAsync(u => u.Email.ToUpper() == email.ToUpper());
             })
             .WithMessage("User with {PropertyName} {PropertyValue} already exists");
 

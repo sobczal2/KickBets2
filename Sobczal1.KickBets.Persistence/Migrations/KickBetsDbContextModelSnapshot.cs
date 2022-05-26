@@ -466,11 +466,9 @@ namespace Sobczal1.KickBets.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CoachName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CoachPhoto")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Discriminator")
@@ -518,7 +516,6 @@ namespace Sobczal1.KickBets.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Pos")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Starting11")

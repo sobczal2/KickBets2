@@ -26,6 +26,10 @@ export const DashboardList = ({fixtureListParams}: Props) => {
     useEffect(() => {
         setLoading(true)
         setFixtures([])
+        setPaginatedRequestData({
+            currentPage: 1,
+            pageSize: 20
+        })
         agent.Fixtures.list(paginatedRequestData, fixtureListParams)
             .then(res => {
                 console.log(res)
@@ -74,7 +78,10 @@ export const DashboardList = ({fixtureListParams}: Props) => {
 
     return (
         <Box sx={dashboardListStyle}>
-
+            <Typography
+            >
+                Showing {fixtures.length} out of {paginatedResponseData?.totalResults} total.
+            </Typography>
             <InfiniteScroll
                 dataLength={fixtures.length}
                 next={() => {

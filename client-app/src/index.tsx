@@ -8,21 +8,27 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {HomePage} from "./app/pages/HomePage";
 import {DashboardPage} from "./app/pages/DashboardPage";
 import {App} from "./app/layout/App";
+import {FixtureDetailsPage} from "./app/pages/FixtureDetailsPage";
+import {LoginPage} from "./app/pages/LoginPage";
+import {RegisterPage} from "./app/pages/RegisterPage";
+import {AboutPage} from "./app/pages/AboutPage";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+    document.getElementById('root') as HTMLElement
 );
 root.render(
     <ThemeProvider theme={theme}>
         <BrowserRouter>
             <Routes>
-                <Route index element={<HomePage />}/>
+                <Route index element={<HomePage/>}/>
                 <Route path="/" element={<App/>}>
                     <Route path="fixtures" element={<DashboardPage/>}/>
+                    <Route path="fixtures/:fixtureId" element={<FixtureDetailsPage/>}/>
+                    <Route path="login" element={<LoginPage/>}/>
+                    <Route path="register" element={<RegisterPage/>}/>
+                    <Route path="about" element={<AboutPage/>}/>
                     <Route path="mybets" element={<div></div>}/>
-                    <Route path="about" element={<div></div>}/>
                 </Route>
-                {/*<Route path="/about" element={<AboutPage/>}/>*/}
                 {/*<Route path="/fixtures/details/:fixtureId" element={<FixtureDetailsPage/>}/>*/}
             </Routes>
         </BrowserRouter>

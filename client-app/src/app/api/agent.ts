@@ -9,6 +9,8 @@ import {ScoreDto} from "../models/football/scores";
 import {StatisticDto} from "../models/football/statistics";
 import {StatusDto} from "../models/football/statuses";
 import {TeamDto} from "../models/football/teams";
+import {LoginDto, RegisterDto, UserDto} from "../models/identity";
+import {store} from "../stores/store";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -26,6 +28,12 @@ axios.interceptors.response.use(async res => {
         console.log(error)
         return Promise.reject(error)
     }
+})
+
+axios.interceptors.request.use(req => {
+    const token = store.identityStore.token
+    if(token) req.headers!.Authorization = `Bearer ${token}`
+    return req
 })
 
 const requests = {
@@ -90,6 +98,17 @@ const Teams = {
         requests.get<TeamDto>(`/teams/${teamsId}`, {}),
 }
 
+const Identity = {
+    login: (credentials: LoginDto) =>
+        requests.post<UserDto>(`/identity/login`, credentials),
+    register: (credentials: RegisterDto) =>
+        requests.post<UserDto>(`/identity/register`, credentials),
+    aboutMe: (refreshToken: boolean) =>
+        requests.get<UserDto>("/identity", {refreshToken: refreshToken}),
+    addBalance: () =>
+        requests.post<UserDto>("/identity/addbalance", {}),
+}
+
 const agent = {
     Fixtures,
     Leagues,
@@ -98,6 +117,7 @@ const agent = {
     Statistics,
     Statuses,
     Teams,
+    Identity,
 }
 
 export default agent
