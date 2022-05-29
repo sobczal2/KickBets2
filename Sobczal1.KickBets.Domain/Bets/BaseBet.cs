@@ -5,11 +5,22 @@ namespace Sobczal1.KickBets.Domain.Bets;
 
 public class BaseBet : BaseDomainEntity
 {
-    public double Value { get; set; }
-    public string CreatedAt { get; set; } = null!;
-    public string CreatedBy { get; set; } = null!;
     public int FixtureId { get; set; }
-    public virtual Fixture Fixture { get; set; } = null!;
+    public Fixture Fixture { get; set; } = null!;
     public int AppUserId { get; set; }
-    public virtual AppUser AppUser { get; set; } = null!;
+    public AppUser AppUser { get; set; } = null!;
+    public double Value { get; set; }
+    // "pending", "won", "lost" or "cancelled"
+    public string Status { get; set; } = null!;
+    public DateTime TimeStamp { get; set; }
+
+    public virtual string GetBetType()
+    {
+        throw new NotSupportedException("Description of base bet not available.");
+    }
+
+    public virtual void TryResolving()
+    {
+        throw new NotSupportedException("Resolving base bet not available.");
+    }
 }

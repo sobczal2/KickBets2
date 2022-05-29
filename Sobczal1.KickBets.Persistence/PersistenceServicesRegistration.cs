@@ -57,9 +57,10 @@ public static class PersistenceServicesRegistration
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        services.AddScoped<IBaseBetRepository, BaseBetRepository>();
-        services.AddScoped<IWdlftBetRepository, WdlftBetRepository>();
+        services.AddScoped<IBetsDataRepository, BetsDataRepository>();
+        services.AddScoped<IBetRepository, BetRepository>();
         services.AddScoped<IWdlhtBetRepository, WdlhtBetRepository>();
+        services.AddScoped<IWdlftBetRepository, WdlftBetRepository>();
         services.AddScoped<IEventRepository, EventRepository>();
         services.AddScoped<IFixtureRepository, FixtureRepository>();
         services.AddScoped<ILeagueRepository, LeagueRepository>();

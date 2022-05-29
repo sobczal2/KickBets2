@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Sobczal1.KickBets.Application.DTOs.Bets;
 
 namespace Sobczal1.KickBets.Api.Controllers;
 
@@ -12,5 +13,14 @@ public class BetsDataController : ControllerBase
     public BetsDataController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<BetsDataDto>> GetById([FromRoute] int id)
+    {
+        var betsData =
+            await _mediator.Send(
+                new Sobczal1.KickBets.Application.Features.BetsData.Requests.Queries.GetBetsDataByIdQuery {Id = id});
+        return Ok(betsData);
     }
 }

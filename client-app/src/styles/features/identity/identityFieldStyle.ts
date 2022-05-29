@@ -4,14 +4,14 @@ export const identityFieldStyle = {
 }
 
 export const identityFieldLabelStyle = {
-    fontSize: "1.2rem",
+    fontSize: "1.5rem",
 }
 
 export const identityFieldInputStyle = {
-    fontSize: "1.2rem",
+    fontSize: "1.5rem",
     color: "text.secondary"
 }
 
 export const identityFieldHelperStyle = {
-    fontSize: "1rem",
+    fontSize: "1.2rem",
 }

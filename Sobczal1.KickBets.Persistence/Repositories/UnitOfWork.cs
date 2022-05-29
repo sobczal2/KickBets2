@@ -16,9 +16,10 @@ public class UnitOfWork : IUnitOfWork
         _context = context;
     }
 
-    private IBaseBetRepository? _baseBetRepository;
-    private IWdlftBetRepository? _wdlftBetRepository;
+    private IBetsDataRepository? _betsDataRepository;
+    private IBetRepository? _betRepository;
     private IWdlhtBetRepository? _wdlhtBetRepository;
+    private IWdlftBetRepository? _wdlftBetRepository;
     private IEventRepository? _eventRepository;
     private IFixtureRepository? _fixtureRepository;
     private ILeagueRepository? _leagueRepository;
@@ -30,9 +31,10 @@ public class UnitOfWork : IUnitOfWork
     private ITeamRepository? _teamRepository;
     private IVenueRepository? _venueRepository;
 
-    public IBaseBetRepository BaseBetRepository => _baseBetRepository ??= new BaseBetRepository(_context);
-    public IWdlftBetRepository WdlftBetRepository => _wdlftBetRepository ??= new WdlftBetRepository(_context);
+    public IBetsDataRepository BetsDataRepository => _betsDataRepository ??= new BetsDataRepository(_context);
+    public IBetRepository BetRepository => _betRepository ??= new BetRepository(_context);
     public IWdlhtBetRepository WdlhtBetRepository => _wdlhtBetRepository ??= new WdlhtBetRepository(_context);
+    public IWdlftBetRepository WdlftBetRepository => _wdlftBetRepository ??= new WdlftBetRepository(_context);
     public IEventRepository EventRepository => _eventRepository ??= new EventRepository(_context);
     public IFixtureRepository FixtureRepository => _fixtureRepository ??= new FixtureRepository(_context);
     public ILeagueRepository LeagueRepository => _leagueRepository ??= new LeagueRepository(_context);

@@ -17,7 +17,14 @@ export const HomePage = (props: Props) => {
                 variant="h1"
                 sx={homePageTitleStyle}
             >
-                KickBets
+                <span className="l1">K</span>
+                <span className="l2">i</span>
+                <span className="l3">c</span>
+                <span className="l4">k</span>
+                <span className="l5">B</span>
+                <span className="l6">e</span>
+                <span className="l7">t</span>
+                <span className="l8">s</span>
             </Typography>
             <Button sx={homePageButtonStyle} onClick={() => navigate("/fixtures")} disableRipple>
                 Get started!

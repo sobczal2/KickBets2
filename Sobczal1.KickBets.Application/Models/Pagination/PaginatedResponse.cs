@@ -29,10 +29,15 @@ public class PaginatedResponse<T>
 
         if (!validationResult.IsValid)
             throw new ValidationErrorsException(validationResult);
-        
+
         var totalCount = await source.CountAsync();
-        var items = await source.OrderBy(order).Skip((paginatedRequestData.CurrentPage!.Value - 1) * paginatedRequestData.PageSize!.Value)
+        
+        source = reverseOrder ? source.OrderByDescending(order) : source.OrderBy(order);
+        
+        var items = await source
+            .Skip((paginatedRequestData.CurrentPage!.Value - 1) * paginatedRequestData.PageSize!.Value)
             .Take(paginatedRequestData.PageSize.Value).ToListAsync();
-        return new PaginatedResponse<T>(items, paginatedRequestData.CurrentPage.Value, paginatedRequestData.PageSize.Value, totalCount);
+        return new PaginatedResponse<T>(items, paginatedRequestData.CurrentPage.Value,
+            paginatedRequestData.PageSize.Value, totalCount);
     }
 }

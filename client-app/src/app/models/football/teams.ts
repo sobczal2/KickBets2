@@ -1,4 +1,4 @@
-import { BaseDto } from "./base";
+import { BaseDto } from "../common/base";
 
 export interface TeamDto extends BaseDto {
     name: string;

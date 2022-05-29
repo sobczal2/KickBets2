@@ -37,4 +37,12 @@ public class FixtureRepository : GenericRepository<Fixture>, IFixtureRepository
         return await _dbContext.Fixtures.Include(f => f.HomeEvents).Include(f => f.AwayEvents)
             .FirstOrDefaultAsync(f => f.Id == id);
     }
+
+    public async Task<Fixture?> GetWithBetsData(int id)
+    {
+        return await _dbContext.Fixtures
+            .Include(f => f.BetsData).ThenInclude(bd => bd.WdlhtBetsData)
+            .Include(f => f.BetsData).ThenInclude(bd => bd.WdlftBetsData)
+            .FirstOrDefaultAsync(f => f.Id == id);
+    }
 }

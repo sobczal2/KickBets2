@@ -45,10 +45,5 @@ public class FixtureConfiguration : IEntityTypeConfiguration<Fixture>
             .WithOne(l => l.Fixture)
             .HasForeignKey<Fixture>(f => f.AwayLineupId)
             .OnDelete(DeleteBehavior.NoAction);
-
-        builder
-            .HasOne(f => f.BetsData)
-            .WithOne(bd => bd.Fixture)
-            .HasForeignKey<Fixture>(f => f.BetsDataId);
     }
 }

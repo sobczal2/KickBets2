@@ -5,9 +5,11 @@ namespace Sobczal1.KickBets.Application.Contracts.Persistence;
 
 public interface IUnitOfWork : IDisposable
 {
-    IBaseBetRepository BaseBetRepository { get; }
-    IWdlftBetRepository WdlftBetRepository { get; }
+    IBetsDataRepository BetsDataRepository { get; }
+
+    IBetRepository BetRepository { get; }
     IWdlhtBetRepository WdlhtBetRepository { get; }
+    IWdlftBetRepository WdlftBetRepository { get; }
     IEventRepository EventRepository { get; }
     IFixtureRepository FixtureRepository { get; }
     ILeagueRepository LeagueRepository { get; }

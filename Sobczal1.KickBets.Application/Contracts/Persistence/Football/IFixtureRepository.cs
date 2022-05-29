@@ -8,4 +8,5 @@ public interface IFixtureRepository : IGenericRepository<Fixture>
     Task<Fixture?> GetWithStatistics(int id);
     Task<Fixture?> GetWithLineups(int id);
     Task<Fixture?> GetWithEvents(int id);
+    Task<Fixture?> GetWithBetsData(int id);
 }

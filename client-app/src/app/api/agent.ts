@@ -11,6 +11,8 @@ import {StatusDto} from "../models/football/statuses";
 import {TeamDto} from "../models/football/teams";
 import {LoginDto, RegisterDto, UserDto} from "../models/identity";
 import {store} from "../stores/store";
+import {VenueDto} from "../models/football/venues";
+import {BetsDataDto} from "../models/bets/bets";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -39,6 +41,7 @@ axios.interceptors.request.use(req => {
 const requests = {
     get: <T>(url: string, params: {}) => axios.get<T>(url, {params: params}),
     post: <T>(url: string, body: {}) => axios.post<T>(url, body),
+    postWithParams: <T>(url: string, body: {}, params: {}) => axios.post<T>(url, body, {params: params}),
     put: <T>(url: string, body: {}) => axios.put<T>(url, body),
     del: <T>(url: string) => axios.delete<T>(url),
 }
@@ -58,7 +61,11 @@ const Fixtures = {
                 return res
             }),
     getById: (fixtureId: number) =>
-        requests.get<FixtureDto>(`/fixtures/${fixtureId}`, {}),
+        requests.get<FixtureDto>(`/fixtures/${fixtureId}`, {})
+            .then(res => {
+                res.data.date = dayjs(res.data.date)
+                return res
+            }),
 }
 
 const Leagues = {
@@ -94,8 +101,13 @@ const Statuses = {
 }
 
 const Teams = {
-    getById: (teamsId: number) =>
-        requests.get<TeamDto>(`/teams/${teamsId}`, {}),
+    getById: (teamId: number) =>
+        requests.get<TeamDto>(`/teams/${teamId}`, {}),
+}
+
+const Venues = {
+    getById: (venueId: number) =>
+        requests.get<VenueDto>(`/venues/${venueId}`, {}),
 }
 
 const Identity = {
@@ -109,6 +121,15 @@ const Identity = {
         requests.post<UserDto>("/identity/addbalance", {}),
 }
 
+const Bets = {
+    createWdlhtBet: (fixtureId: number, value: number, wdlhtSide: "home"|"away"|"draw") =>
+        requests.postWithParams("/wdlht", {}, {fixtureId: fixtureId, value: value, wdlhtSide: wdlhtSide}),
+    createWdlftBet: (fixtureId: number, value: number, wdlhtSide: "home"|"away"|"draw") =>
+        requests.postWithParams("/wdlft", {}, {fixtureId: fixtureId, value: value, wdlftSide: wdlhtSide}),
+    getBetsData: (betsDataId: number) =>
+        requests.get<BetsDataDto>(`betsdata/${betsDataId}`, {})
+}
+
 const agent = {
     Fixtures,
     Leagues,
@@ -117,7 +138,9 @@ const agent = {
     Statistics,
     Statuses,
     Teams,
+    Venues,
     Identity,
+    Bets,
 }
 
 export default agent

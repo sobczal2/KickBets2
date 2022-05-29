@@ -5,13 +5,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\Bets" />
     <Folder Include="Features\Fixtures\Handlers\Commands" />
     <Folder Include="Features\Fixtures\Requests\Commands" />
     <Folder Include="Features\Leagues\Handlers\Commands" />
     <Folder Include="Features\Leagues\Requests\Commands" />
     <Folder Include="Features\Teams\Handlers\Commands" />
     <Folder Include="Features\Teams\Requests\Commands" />
+    <Folder Include="Services\Bets" />
   </ItemGroup>
 
   <ItemGroup>

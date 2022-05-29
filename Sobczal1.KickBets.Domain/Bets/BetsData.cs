@@ -1,18 +1,14 @@
-﻿using Sobczal1.KickBets.Domain.Bets.Wdlft;
-using Sobczal1.KickBets.Domain.Bets.Wdlht;
-using Sobczal1.KickBets.Domain.Football;
-
-namespace Sobczal1.KickBets.Domain.Bets;
+﻿namespace Sobczal1.KickBets.Domain.Bets;
 
 public class BetsData : BaseDomainEntity
 {
     public BetsData()
     {
-        WdlftData = new WdlftData();
-        WdlhtData = new WdlhtData();
+        WdlftBetsData = new WdlftBetsData();
+        WdlhtBetsData = new WdlhtBetsData();
     }
-    public WdlftData WdlftData { get; set; }
-    public WdlhtData WdlhtData { get; set; }
-    public int FixtureId { get; set; }
-    public Fixture Fixture { get; set; } = null!;
+    public int WdlftBetsDataId { get; set; }
+    public WdlftBetsData WdlftBetsData { get; set; }
+    public int WdlhtBetsDataId { get; set; }
+    public WdlhtBetsData WdlhtBetsData { get; set; }
 }

@@ -2,7 +2,7 @@
 
 namespace Sobczal1.KickBets.Application.Contracts.Persistence.Bet;
 
-public interface IBaseBetRepository : IGenericRepository<BaseBet>
+public interface IBetsDataRepository
 {
-    
+    Task<BetsData?> Get(int id);
 }

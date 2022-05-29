@@ -166,20 +166,19 @@ namespace Sobczal1.KickBets.Persistence.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CreatedAt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FixtureId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("Value")
                         .HasColumnType("float");
@@ -203,25 +202,22 @@ namespace Sobczal1.KickBets.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("FixtureId")
+                    b.Property<int>("WdlftBetsDataId")
                         .HasColumnType("int");
 
-                    b.Property<int>("WdlftDataId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WdlhtDataId")
+                    b.Property<int>("WdlhtBetsDataId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WdlftDataId");
+                    b.HasIndex("WdlftBetsDataId");
 
-                    b.HasIndex("WdlhtDataId");
+                    b.HasIndex("WdlhtBetsDataId");
 
                     b.ToTable("BetsData");
                 });
 
-            modelBuilder.Entity("Sobczal1.KickBets.Domain.Bets.Wdlft.WdlftData", b =>
+            modelBuilder.Entity("Sobczal1.KickBets.Domain.Bets.WdlftBetsData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -240,10 +236,10 @@ namespace Sobczal1.KickBets.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WdlftData");
+                    b.ToTable("WdlftBetsData");
                 });
 
-            modelBuilder.Entity("Sobczal1.KickBets.Domain.Bets.Wdlht.WdlhtData", b =>
+            modelBuilder.Entity("Sobczal1.KickBets.Domain.Bets.WdlhtBetsData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -262,7 +258,7 @@ namespace Sobczal1.KickBets.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WdlhtData");
+                    b.ToTable("WdlhtBetsData");
                 });
 
             modelBuilder.Entity("Sobczal1.KickBets.Domain.DbUpdate", b =>
@@ -404,8 +400,7 @@ namespace Sobczal1.KickBets.Persistence.Migrations
 
                     b.HasIndex("AwayTeamId");
 
-                    b.HasIndex("BetsDataId")
-                        .IsUnique();
+                    b.HasIndex("BetsDataId");
 
                     b.HasIndex("HomeLineupId")
                         .IsUnique()
@@ -789,23 +784,24 @@ namespace Sobczal1.KickBets.Persistence.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Sobczal1.KickBets.Domain.Bets.Wdlft.WdlftBet", b =>
+            modelBuilder.Entity("Sobczal1.KickBets.Domain.Bets.WdlftBet", b =>
                 {
                     b.HasBaseType("Sobczal1.KickBets.Domain.Bets.BaseBet");
 
-                    b.Property<int>("Side")
-                        .HasColumnType("int");
+                    b.Property<string>("WdlftSide")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("WdlftBet");
                 });
 
-            modelBuilder.Entity("Sobczal1.KickBets.Domain.Bets.Wdlht.WdlhtBet", b =>
+            modelBuilder.Entity("Sobczal1.KickBets.Domain.Bets.WdlhtBet", b =>
                 {
                     b.HasBaseType("Sobczal1.KickBets.Domain.Bets.BaseBet");
 
-                    b.Property<int>("Side")
-                        .HasColumnType("int")
-                        .HasColumnName("WdlhtBet_Side");
+                    b.Property<string>("WdlhtSide")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("WdlhtBet");
                 });
@@ -910,13 +906,13 @@ namespace Sobczal1.KickBets.Persistence.Migrations
             modelBuilder.Entity("Sobczal1.KickBets.Domain.Bets.BaseBet", b =>
                 {
                     b.HasOne("Sobczal1.KickBets.Domain.Identity.AppUser", "AppUser")
-                        .WithMany("Bets")
+                        .WithMany()
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Sobczal1.KickBets.Domain.Football.Fixture", "Fixture")
-                        .WithMany()
+                        .WithMany("Bets")
                         .HasForeignKey("FixtureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -928,21 +924,21 @@ namespace Sobczal1.KickBets.Persistence.Migrations
 
             modelBuilder.Entity("Sobczal1.KickBets.Domain.Bets.BetsData", b =>
                 {
-                    b.HasOne("Sobczal1.KickBets.Domain.Bets.Wdlft.WdlftData", "WdlftData")
+                    b.HasOne("Sobczal1.KickBets.Domain.Bets.WdlftBetsData", "WdlftBetsData")
                         .WithMany()
-                        .HasForeignKey("WdlftDataId")
+                        .HasForeignKey("WdlftBetsDataId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Sobczal1.KickBets.Domain.Bets.Wdlht.WdlhtData", "WdlhtData")
+                    b.HasOne("Sobczal1.KickBets.Domain.Bets.WdlhtBetsData", "WdlhtBetsData")
                         .WithMany()
-                        .HasForeignKey("WdlhtDataId")
+                        .HasForeignKey("WdlhtBetsDataId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("WdlftData");
+                    b.Navigation("WdlftBetsData");
 
-                    b.Navigation("WdlhtData");
+                    b.Navigation("WdlhtBetsData");
                 });
 
             modelBuilder.Entity("Sobczal1.KickBets.Domain.Football.Event", b =>
@@ -974,8 +970,8 @@ namespace Sobczal1.KickBets.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("Sobczal1.KickBets.Domain.Bets.BetsData", "BetsData")
-                        .WithOne("Fixture")
-                        .HasForeignKey("Sobczal1.KickBets.Domain.Football.Fixture", "BetsDataId")
+                        .WithMany()
+                        .HasForeignKey("BetsDataId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1083,15 +1079,11 @@ namespace Sobczal1.KickBets.Persistence.Migrations
                     b.Navigation("Fixture");
                 });
 
-            modelBuilder.Entity("Sobczal1.KickBets.Domain.Bets.BetsData", b =>
-                {
-                    b.Navigation("Fixture")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Sobczal1.KickBets.Domain.Football.Fixture", b =>
                 {
                     b.Navigation("AwayEvents");
+
+                    b.Navigation("Bets");
 
                     b.Navigation("HomeEvents");
                 });
@@ -1111,11 +1103,6 @@ namespace Sobczal1.KickBets.Persistence.Migrations
                 {
                     b.Navigation("Fixture")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Sobczal1.KickBets.Domain.Identity.AppUser", b =>
-                {
-                    b.Navigation("Bets");
                 });
 
             modelBuilder.Entity("Sobczal1.KickBets.Domain.Football.AwayLineup", b =>

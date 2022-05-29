@@ -189,8 +189,8 @@ public class FootballApiService
     private async Task<bool> UpdateFixtureNotYetInDb(FixtureRoot fixtureRoot, int leagueId)
     {
         var fixture = _mapper.Map<Fixture>(fixtureRoot);
-        fixture.BetsData = new BetsData();
         fixture.LeagueId = leagueId;
+        fixture.BetsData = new BetsData();
         await FixFixtureOnInsert(fixture);
         await _unitOfWork.FixtureRepository.Add(fixture);
         await _unitOfWork.Save();

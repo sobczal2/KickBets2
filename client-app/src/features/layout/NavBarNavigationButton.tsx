@@ -13,6 +13,7 @@ export const NavBarNavigationButton = ({to, content}: Props) => {
         <Button
             component={NavLink}
             to={to}
+            end
             disableRipple
             sx={navBarNavigationButtonStyle}
         >

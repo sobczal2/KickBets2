@@ -4,6 +4,9 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {FixtureDto} from "../models/football/fixtures";
 import agent from "../api/agent";
+import {Backdrop, CircularProgress, Grid} from "@mui/material";
+import {FixtureDetailsDataSection} from "../../features/fixtureDetails/FixtureDetailsDataSection";
+import {FixtureDetailsBetsSection} from "../../features/fixtureDetails/FixtureDetailsBetsSection";
 
 type Props = {
 
@@ -24,16 +27,26 @@ export const FixtureDetailsPage = (props: Props) => {
             .finally(() => setLoading(false))
     }, [params, params.fixtureId])
 
-    if(loading)
-        return (
-            <div>
-                loading
-            </div>
-        )
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     return (
-        <div>
-            Fixture with id: {params.fixtureId}
-        </div>
+        <>
+            <Backdrop
+                open={loading}
+            >
+                <CircularProgress color="secondary"/>
+            </Backdrop>
+            <Grid container>
+                <Grid item xs={8}>
+                    <FixtureDetailsDataSection fixture={fixture} />
+                </Grid>
+                <Grid item xs={4}>
+                    <FixtureDetailsBetsSection fixture={fixture} />
+                </Grid>
+            </Grid>
+        </>
+
     );
 };

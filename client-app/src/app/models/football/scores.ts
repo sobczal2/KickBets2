@@ -1,4 +1,4 @@
-import { BaseDto } from "./base";
+import { BaseDto } from "../common/base";
 
 export interface ScoreDto extends BaseDto {
     homeCurrentScore: number | null;

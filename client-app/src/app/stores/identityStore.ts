@@ -27,7 +27,7 @@ export default class IdentityStore {
     }
 
     aboutMe = (refreshToken: boolean) => {
-        console.log("about me")
+        if(!this.token) return
         agent.Identity.aboutMe(refreshToken)
             .then(res => {
                 this.saveUserDto(res.data)

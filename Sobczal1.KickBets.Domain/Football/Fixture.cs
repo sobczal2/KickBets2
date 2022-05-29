@@ -1,4 +1,5 @@
-﻿using Sobczal1.KickBets.Domain.Bets;
+﻿
+using Sobczal1.KickBets.Domain.Bets;
 
 namespace Sobczal1.KickBets.Domain.Football;
 
@@ -28,6 +29,7 @@ public class Fixture : BaseDomainEntity
     public virtual AwayStatistics? AwayStatistics { get; set; }
     public virtual ICollection<HomeEvent> HomeEvents { get; set; } = null!;
     public virtual ICollection<AwayEvent> AwayEvents { get; set; } = null!;
+    public virtual ICollection<BaseBet> Bets { get; set; } = null!;
     public int BetsDataId { get; set; }
-    public virtual BetsData BetsData { get; set; } = null!;
+    public BetsData BetsData { get; set; } = null!;
 }

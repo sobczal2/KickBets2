@@ -1,4 +1,4 @@
-import {BaseDto} from "./base";
+import {BaseDto} from "../common/base";
 import {Dayjs} from "dayjs";
 
 export interface FixtureDto extends BaseDto {
