@@ -72,4 +72,19 @@ public class WdlftBet : BaseBet
             AppUser.Balance += Value;
         }
     }
+
+    public override string ToString()
+    {
+        switch (WdlftSide)
+        {
+            case "home":
+                return $"{Fixture.HomeTeam.Name} to win at full time.";
+            case "away":
+                return "Draw at full time";
+            case "draw":
+                return $"{Fixture.AwayTeam.Name} to win at full time.";
+            default:
+                throw new InvalidDataException("Bet record corrupted.");
+        }
+    }
 }

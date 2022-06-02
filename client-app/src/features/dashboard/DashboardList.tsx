@@ -8,7 +8,20 @@ import agent from "../../app/api/agent";
 import {dashboardListStyle} from "../../styles/features/dashboard/dashboardListStyle";
 import {DashboardListItem} from "./DashboardListItem";
 import SearchIcon from '@mui/icons-material/Search';
-import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScroll from 'react-infinite-scroller'
+
+
+const getGroupedFixtures = (fixtures: FixtureDto[], reverse: boolean) => {
+    return fixtures.sort((a, b) => reverse ? b.date.unix() - a.date.unix() : a.date.unix() - b.date.unix()).reduce<{ [index: string]: FixtureDto[] }>((groups, fixture) => {
+        const date = fixture.date.toISOString().split('T')[0]
+        if (!groups[date]) {
+            groups[date] = []
+        }
+        groups[date].push(fixture);
+        return groups;
+
+    }, {})
+}
 
 type Props = {
     fixtureListParams: FixtureListParams
@@ -16,23 +29,18 @@ type Props = {
 export const DashboardList = ({fixtureListParams}: Props) => {
 
     const [fixtures, setFixtures] = useState<FixtureDto[]>([]);
-    const [paginatedRequestData, setPaginatedRequestData] = useState<PaginatedRequestData>({
-        currentPage: 1,
-        pageSize: 20
-    });
     const [paginatedResponseData, setPaginatedResponseData] = useState<PaginatedResponseData | undefined>(undefined);
     const [loading, setLoading] = useState(false)
+    const [groupedFixtures, setGroupedFixtures] = useState<{ [index: string]: FixtureDto[] }>({})
 
     useEffect(() => {
         setLoading(true)
         setFixtures([])
-        setPaginatedRequestData({
+        agent.Fixtures.list({
             currentPage: 1,
-            pageSize: 20
-        })
-        agent.Fixtures.list(paginatedRequestData, fixtureListParams)
+            pageSize: 10
+        }, fixtureListParams)
             .then(res => {
-                console.log(res)
                 setPaginatedResponseData({
                     pageSize: res.data.pageSize,
                     currentPage: res.data.currentPage,
@@ -43,6 +51,10 @@ export const DashboardList = ({fixtureListParams}: Props) => {
                 setLoading(false)
             })
     }, [fixtureListParams])
+
+    useEffect(() => {
+        setGroupedFixtures(getGroupedFixtures(fixtures, fixtureListParams.type == "ended" || fixtureListParams.type == "cancelled"))
+    }, [fixtures])
 
     if (loading)
         return (
@@ -76,6 +88,7 @@ export const DashboardList = ({fixtureListParams}: Props) => {
             </Box>
         )
 
+
     return (
         <Box sx={dashboardListStyle}>
             <Typography
@@ -83,12 +96,13 @@ export const DashboardList = ({fixtureListParams}: Props) => {
                 Showing {fixtures.length} out of {paginatedResponseData?.totalResults} total.
             </Typography>
             <InfiniteScroll
-                dataLength={fixtures.length}
-                next={() => {
-                    console.log(paginatedRequestData)
-                    // @ts-ignore
-                    setPaginatedRequestData({currentPage: paginatedRequestData.currentPage + 1, pageSize: paginatedRequestData.pageSize})
-                    agent.Fixtures.list(paginatedRequestData, fixtureListParams)
+                pageStart={1}
+                initialLoad={false}
+                loadMore={(pageNumber) => {
+                    agent.Fixtures.list({
+                        currentPage: pageNumber,
+                        pageSize: 10
+                    }, fixtureListParams)
                         .then(res => {
                             setFixtures(prev => [...prev, ...res.data.items])
                             setPaginatedResponseData({
@@ -99,15 +113,25 @@ export const DashboardList = ({fixtureListParams}: Props) => {
                             })
                         })
                 }}
-                hasMore={paginatedRequestData.currentPage! <= (paginatedResponseData?.totalPages || 1)}
+                hasMore={(paginatedResponseData?.currentPage || 0) < (paginatedResponseData?.totalPages || 0)}
                 loader={
-                    <Box sx={{my: {xs: "0.5rem", md: "3rem"}, width: "100%"}}>
+                    <Box sx={{my: {xs: "0.5rem", md: "3rem"}, width: "100%"}} key={1337}>
                         <LinearProgress color="primary" sx={{mx: "auto", width: "10rem", height: "1rem"}}/>
                     </Box>
                 }
             >
-                {fixtures.map((f, i) => (
-                    <DashboardListItem key={i} fixture={f}/>
+                {Object.keys(groupedFixtures).map((date, i) => (
+                    <Box key={i}>
+                        <Typography
+                            variant="h4"
+                            sx={{borderBottom: "1px solid", borderColor: "primary.main", mt: "2rem"}}
+                        >
+                            {date}
+                        </Typography>
+                        {groupedFixtures[date].map((fixture) => (
+                            <DashboardListItem fixture={fixture} key={fixture.id}/>
+                        ))}
+                    </Box>
                 ))}
             </InfiniteScroll>
         </Box>

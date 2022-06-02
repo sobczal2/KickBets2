@@ -26,7 +26,7 @@ export const HomePage = (props: Props) => {
                 <span className="l7">t</span>
                 <span className="l8">s</span>
             </Typography>
-            <Button sx={homePageButtonStyle} onClick={() => navigate("/fixtures")} disableRipple>
+            <Button sx={homePageButtonStyle} onClick={() => navigate("/fixtures")} disableRipple id="homePageButton">
                 Get started!
             </Button>
         </Box>

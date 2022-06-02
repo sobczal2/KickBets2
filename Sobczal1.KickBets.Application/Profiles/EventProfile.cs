@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Sobczal1.KickBets.Application.DTOs.Football.Events;
 using Sobczal1.KickBets.Domain.Football;
 using EventRoot = Sobczal1.KickBets.Application.Services.ApiFootball.Models.Events.Root;
 
@@ -19,5 +20,7 @@ public class EventProfile : Profile
             .ForMember(e => e.AssistName, opt => opt.MapFrom(q => q.Assist.Name));
         CreateMap<EventRoot, HomeEvent>();
         CreateMap<EventRoot, AwayEvent>();
+
+        CreateMap<Event, EventDto>();
     }
 }

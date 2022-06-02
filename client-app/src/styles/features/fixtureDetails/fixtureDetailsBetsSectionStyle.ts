@@ -36,7 +36,7 @@ export const fixtureDetailsBetsSectionDisplayInnerBoxStyle = {
 
 export const fixtureDetailsBetsSectionDisplayTitleStyle = {
     p: "1rem",
-    fontSize: "3rem",
+    fontSize: "2rem",
     color: "text.secondary",
     textAlign: "center"
 }
@@ -48,6 +48,4 @@ export const fixtureDetailsBetsSectionDisplayMultiplierStyle = {
     textAlign: "center",
     mb: "1rem",
     mx: "6rem",
-    borderRadius: "10%",
-    backgroundColor: "secondary.main",
 }

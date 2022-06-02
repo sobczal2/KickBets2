@@ -12,7 +12,7 @@ import {TeamDto} from "../models/football/teams";
 import {LoginDto, RegisterDto, UserDto} from "../models/identity";
 import {store} from "../stores/store";
 import {VenueDto} from "../models/football/venues";
-import {BetsDataDto} from "../models/bets/bets";
+import {BaseBetDto, BetsDataDto} from "../models/bets/bets";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -123,11 +123,16 @@ const Identity = {
 
 const Bets = {
     createWdlhtBet: (fixtureId: number, value: number, wdlhtSide: "home"|"away"|"draw") =>
-        requests.postWithParams("/wdlht", {}, {fixtureId: fixtureId, value: value, wdlhtSide: wdlhtSide}),
-    createWdlftBet: (fixtureId: number, value: number, wdlhtSide: "home"|"away"|"draw") =>
-        requests.postWithParams("/wdlft", {}, {fixtureId: fixtureId, value: value, wdlftSide: wdlhtSide}),
+        requests.post("/bets/wdlht", {fixtureId: fixtureId, value: value, wdlhtSide: wdlhtSide}),
+    createWdlftBet: (fixtureId: number, value: number, wdlftSide: "home"|"away"|"draw") =>
+        requests.post("/bets/wdlft", {fixtureId: fixtureId, value: value, wdlftSide: wdlftSide}),
     getBetsData: (betsDataId: number) =>
-        requests.get<BetsDataDto>(`betsdata/${betsDataId}`, {})
+        requests.get<BetsDataDto>(`/betsdata/${betsDataId}`, {}),
+    getMyBets: (paginatedRequestData: PaginatedRequestData) =>
+        requests.get<PaginatedResponse<BaseBetDto>>("/bets", {
+            pageSize: paginatedRequestData.pageSize,
+            currentPage: paginatedRequestData.currentPage,
+        })
 }
 
 const agent = {

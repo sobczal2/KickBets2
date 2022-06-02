@@ -8,7 +8,7 @@ public class Fixture : BaseDomainEntity
     public string? Referee { get; set; }
     public DateTime Date { get; set; }
     public int? VenueId { get; set; }
-    public virtual Venue? Venue { get; set; } = null!;
+    public virtual Venue? Venue { get; set; }
     public int StatusId { get; set; }
     public virtual Status Status { get; set; } = null!;
     public int LeagueId { get; set; }

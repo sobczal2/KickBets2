@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobczal1.KickBets.Domain", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobczal1.KickBets.Persistence", "Sobczal1.KickBets.Persistence\Sobczal1.KickBets.Persistence.csproj", "{8058CD0C-7BCA-43F2-9978-9CE4E41C7E85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobczal1.KickBets.ClientApp.Tests", "Sobczal1.KickBets.ClientApp.Tests\Sobczal1.KickBets.ClientApp.Tests.csproj", "{085239A3-9AC2-43D4-88BB-D317ADEF9B4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{8058CD0C-7BCA-43F2-9978-9CE4E41C7E85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8058CD0C-7BCA-43F2-9978-9CE4E41C7E85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8058CD0C-7BCA-43F2-9978-9CE4E41C7E85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{085239A3-9AC2-43D4-88BB-D317ADEF9B4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{085239A3-9AC2-43D4-88BB-D317ADEF9B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{085239A3-9AC2-43D4-88BB-D317ADEF9B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{085239A3-9AC2-43D4-88BB-D317ADEF9B4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

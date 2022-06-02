@@ -1,6 +1,16 @@
 // @flow
 import * as React from 'react';
-import {Box, Grid, Typography} from "@mui/material";
+import {
+    Box, Button,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    FormControl, FormControlLabel,
+    FormLabel,
+    Grid, Radio,
+    RadioGroup, TextField,
+    Typography
+} from "@mui/material";
 import {
     fixtureDetailsBetsSectionDisplayHeaderStyle,
     fixtureDetailsBetsSectionDisplayInnerBoxStyle,
@@ -13,6 +23,7 @@ import {useEffect, useState} from "react";
 import {WdlhtBetsDataDto} from "../../app/models/bets/wdlhtBets";
 import agent from "../../app/api/agent";
 import dayjs from "dayjs";
+import {useStore} from "../../app/stores/store";
 
 type Props = {
     fixture?: FixtureDto
@@ -22,6 +33,13 @@ export const FixtureDetailsBetsSectionWdlftDisplay = ({fixture}: Props) => {
     const [wdlftData, setWdlftData] = useState<WdlhtBetsDataDto | undefined>(undefined)
     const [homeTeamName, setHomeTeamName] = useState<string | undefined>(undefined)
     const [awayTeamName, setAwayTeamName] = useState<string | undefined>(undefined)
+
+    const [modalVisible, setModalVisible] = useState(false)
+
+    const [side, setSide] = useState<"home" | "draw" | "away">("home")
+    const [value, setValue] = useState<string>("")
+
+    const store = useStore()
 
     const available = dayjs().isBefore(fixture?.date)
 
@@ -52,11 +70,56 @@ export const FixtureDetailsBetsSectionWdlftDisplay = ({fixture}: Props) => {
         }
     }, [fixture, fixture?.awayTeamId])
 
+    // @ts-ignore
     return (
         <Box
             sx={{...fixtureDetailsBetsSectionDisplayOuterBoxStyle, opacity: available ? "100%" : "50%"}}
-            onClick={() => console.log("siema")}
+            onClick={() => {
+                if (available) setModalVisible(true)
+            }}
         >
+            <Dialog
+                open={modalVisible}
+                onClose={() => setModalVisible(false)}
+            >
+                <DialogTitle>Bet: Score at full time</DialogTitle>
+                <DialogContent
+                >
+                    <FormControl>
+                        <FormLabel>Side</FormLabel>
+                        <RadioGroup
+                            value={side}
+                            onChange={e => setSide(e.target.value as "home" | "draw" | "away")}
+                            sx={{display: "flex", flexDirection: "row"}}
+                        >
+                            <FormControlLabel value="home" control={<Radio/>} label={`${homeTeamName} win`}/>
+                            <FormControlLabel value="draw" control={<Radio/>} label="draw"/>
+                            <FormControlLabel value="away" control={<Radio/>} label={`${awayTeamName} win`}/>
+                        </RadioGroup>
+                    </FormControl>
+                    <TextField
+                        value={value}
+                        onChange={e => {
+                            setValue(e.target.value)
+                        }}
+                        // error
+                        // label="Error"
+                        // helperText="Incorrect entry."
+                        variant="standard"
+                    />
+                    <Button
+                        onClick={() => {
+                            agent.Bets.createWdlftBet(fixture!.id, parseFloat(value), side)
+                                .then(res => {
+                                    setModalVisible(false)
+                                    store.identityStore.aboutMe(false)
+                                })
+                        }}
+                    >
+                        Submit
+                    </Button>
+                </DialogContent>
+            </Dialog>
             <Box sx={fixtureDetailsBetsSectionDisplayHeaderStyle}>
                 Bet: Score at full time
             </Box>

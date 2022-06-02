@@ -8,6 +8,7 @@ import {FixtureDetailsDataSectionTabs} from "./FixtureDetailsDataSectionTabs";
 import {useState} from "react";
 import {FixtureDetailsDataSectionStatisticsTab} from "./FixtureDetailsDataSectionStatisticsTab";
 import {FixtureDetailsDataSectionLineupsTab} from "./FixtureDetailsDataSectionLineupsTab";
+import {FixtureDetailsDataSectionFormationTab} from "./FixtureDetailsDataSectionFormationTab";
 
 type Props = {
     fixture?: FixtureDto
@@ -21,8 +22,9 @@ export const FixtureDetailsDataSection = ({fixture}: Props) => {
             <FixtureDetailsDataSectionInfo fixture={fixture}/>
             <FixtureDetailsDataSectionScore fixture={fixture}/>
             <FixtureDetailsDataSectionTabs selectedTab={selectedTab} setSelectedTab={setSelectedTab}/>
-            {selectedTab ==="stats" && <FixtureDetailsDataSectionStatisticsTab fixture={fixture}/>}
-            {selectedTab ==="lineups" && <FixtureDetailsDataSectionLineupsTab fixture={fixture} />}
+            {selectedTab === "stats" && <FixtureDetailsDataSectionStatisticsTab fixture={fixture}/>}
+            {selectedTab === "lineups" && <FixtureDetailsDataSectionLineupsTab fixture={fixture} />}
+            {selectedTab === "formation" && <FixtureDetailsDataSectionFormationTab fixture={fixture}/>}
         </Box>
     );
 };

@@ -8,4 +8,7 @@ public class BaseBetDto : BaseDto
     public string Status { get; set; } = null!;
     public string Type { get; set; } = null!;
     public int BetsDataId { get; set; }
+    public string HomeTeamName { get; set; } = null!;
+    public string AwayTeamName { get; set; } = null!;
+    public string Description { get; set; } = null!;
 }

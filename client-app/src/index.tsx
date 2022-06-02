@@ -12,6 +12,7 @@ import {FixtureDetailsPage} from "./app/pages/FixtureDetailsPage";
 import {LoginPage} from "./app/pages/LoginPage";
 import {RegisterPage} from "./app/pages/RegisterPage";
 import {AboutPage} from "./app/pages/AboutPage";
+import {MyBetsPage} from "./app/pages/MyBetsPage";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -27,7 +28,7 @@ root.render(
                     <Route path="login" element={<LoginPage/>}/>
                     <Route path="register" element={<RegisterPage/>}/>
                     <Route path="about" element={<AboutPage/>}/>
-                    <Route path="mybets" element={<div></div>}/>
+                    <Route path="mybets" element={<MyBetsPage/>}/>
                 </Route>
                 {/*<Route path="/fixtures/details/:fixtureId" element={<FixtureDetailsPage/>}/>*/}
             </Routes>

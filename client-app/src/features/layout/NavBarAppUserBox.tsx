@@ -21,7 +21,7 @@ export const NavBarAppUserBox = observer((props: Props) => {
     {
         return (
             <Box sx={navBarAppUserBoxStyle}>
-                {store.identityStore.user.userName}
+                {store.identityStore.user.userName} - {store.identityStore.user.balance}$
                 <Button
                     onClick={store.identityStore.logout}
                     color="secondary"
@@ -44,6 +44,7 @@ export const NavBarAppUserBox = observer((props: Props) => {
                     component={Link}
                     to={"/login"}
                     sx={navBarAppUserButtonStyle}
+                    id="navbarLoginButton"
                 >
                     Login
                 </Button>
@@ -52,6 +53,7 @@ export const NavBarAppUserBox = observer((props: Props) => {
                     component={Link}
                     to={"/register"}
                     sx={navBarAppUserButtonStyle}
+                    id="navbarRegisterButton"
                 >
                     Register
                 </Button>

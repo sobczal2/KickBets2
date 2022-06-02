@@ -114,6 +114,7 @@ export const LoginPage = (props: Props) => {
                         </Box>
                         <Box sx={loginPageSubmitBoxStyle}>
                             <Button
+                                id="loginSubmitButton"
                                 type="submit"
                                 onClick={submitForm}
                                 variant="outlined"

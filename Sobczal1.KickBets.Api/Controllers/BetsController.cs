@@ -19,7 +19,7 @@ public class BetsController : ControllerBase
 
     [HttpPost("wdlft")]
     [Authorize]
-    public async Task<ActionResult> CreateWdlftBet([FromQuery] CreateWdlftBetDto createWdlftBetDto)
+    public async Task<ActionResult> CreateWdlftBet([FromBody] CreateWdlftBetDto createWdlftBetDto)
     {
         await _mediator.Send(
             new Sobczal1.KickBets.Application.Features.Bets.Requests.Commands.CreateWdlftBetCommand
@@ -29,7 +29,7 @@ public class BetsController : ControllerBase
     
     [HttpPost("wdlht")]
     [Authorize]
-    public async Task<ActionResult> CreateWdlhtBet([FromQuery] CreateWdlhtBetDto createWdlhtBetDto)
+    public async Task<ActionResult> CreateWdlhtBet([FromBody] CreateWdlhtBetDto createWdlhtBetDto)
     {
         await _mediator.Send(
             new Sobczal1.KickBets.Application.Features.Bets.Requests.Commands.CreateWdlhtBetCommand
