@@ -1,7 +1,7 @@
 // @flow 
 import * as React from 'react';
 import {useStore} from "../stores/store";
-import {Box, Button} from "@mui/material";
+import {Box, Button, Grid} from "@mui/material";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {BaseBetDto} from "../models/bets/bets";
@@ -41,12 +41,28 @@ export const MyBetsPage = (props: Props) => {
             </Box>
         )
     }
+
+    if(bets.length === 0)
+    {
+        return (
+            <Box sx={{width: "100%", py: "10rem", textAlign: "center"}}>
+                <Button
+                    variant="outlined"
+                    component={Link}
+                    to="/fixtures"
+                    sx={{fontSize: "3rem"}}
+                >
+                    No bets yet, go make some!
+                </Button>
+            </Box>
+        )
+    }
     
     return (
-        <Box sx={{width: "100%"}}>
+        <Grid container sx={{width: "100%", py: "2rem", display: "flex"}}>
             {bets.map((bet, i) => (
                 <MyBetsListItem bet={bet} key={i} />
             ))}
-        </Box>
+        </Grid>
     );
 };

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Sobczal1.KickBets.Application.DTOs.Football.Events;
 using Sobczal1.KickBets.Application.DTOs.Football.Fixtures;
 using Sobczal1.KickBets.Application.Models.Pagination;
 
@@ -34,5 +35,15 @@ public class FixturesController : ControllerBase
             await _mediator.Send(
                 new Sobczal1.KickBets.Application.Features.Fixtures.Requests.Queries.GetFixtureByIdQuery {Id = id});
         return Ok(fixture);
+    }
+    
+    [HttpGet("{id:int}/events")]
+    public async Task<ActionResult<List<EventDto>>> ListEventsByFixtureId([FromRoute] int id)
+    {
+        var events =
+            await _mediator.Send(
+                new Sobczal1.KickBets.Application.Features.Fixtures.Requests.Queries.GetEventsListQuery()
+                    {FixtureId = id});
+        return Ok(events);
     }
 }

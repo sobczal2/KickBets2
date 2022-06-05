@@ -14,23 +14,7 @@ import {store} from "../stores/store";
 import {VenueDto} from "../models/football/venues";
 import {BaseBetDto, BetsDataDto} from "../models/bets/bets";
 
-const sleep = (delay: number) => {
-    return new Promise((resolve) => {
-        setTimeout(resolve, delay)
-    })
-}
-
 axios.defaults.baseURL = 'https://localhost:7103/api'
-
-axios.interceptors.response.use(async res => {
-    try {
-        await sleep(1000)
-        return res;
-    } catch (error) {
-        console.log(error)
-        return Promise.reject(error)
-    }
-})
 
 axios.interceptors.request.use(req => {
     const token = store.identityStore.token

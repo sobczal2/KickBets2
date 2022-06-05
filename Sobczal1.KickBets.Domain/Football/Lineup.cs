@@ -4,7 +4,7 @@ public class Lineup : BaseDomainEntity
 {
     public int TeamId { get; set; }
     public virtual Team Team { get; set; } = null!;
-    public string Formation { get; set; } = null!;
+    public string? Formation { get; set; } = null!;
     public virtual ICollection<Player> Players { get; set; } = null!;
     public string? CoachName { get; set; }
     public string? CoachPhoto { get; set; }

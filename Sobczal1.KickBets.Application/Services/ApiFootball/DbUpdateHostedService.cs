@@ -39,8 +39,16 @@ public class DbUpdateHostedService : IHostedService, IDisposable
         var dbUpdate = new DbUpdate();
         if (await dbUpdateRepository.ShouldPerformLeaguesUpdate())
         {
-            dbUpdate.LeaguesUpdate = true;
-            await footballApiService.UpdateTrackedLeagues();
+            try
+            {
+                dbUpdate.LeaguesUpdate = true;
+                await footballApiService.UpdateTrackedLeagues();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Failed to update leagues");
+            }
+
         }
         else
         {
@@ -49,8 +57,16 @@ public class DbUpdateHostedService : IHostedService, IDisposable
 
         if (await dbUpdateRepository.ShouldPerformFixturesBigUpdate())
         {
-            dbUpdate.FixturesBigUpdate = true;
+            try
+            {
+                dbUpdate.FixturesBigUpdate = true;
                 await footballApiService.UpdateFixtures(DateTime.Now.AddDays(-30), DateTime.Now.AddDays(30));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Failed to update fixtures");
+            }
+
         }
         else
         {
@@ -59,8 +75,16 @@ public class DbUpdateHostedService : IHostedService, IDisposable
 
         if (await dbUpdateRepository.ShouldPerformFixturesSmallUpdate())
         {
-            dbUpdate.FixturesSmallUpdate = true;
-            await footballApiService.UpdateFixtures(DateTime.Now.AddHours(-5), DateTime.Now.AddHours(5));
+            try
+            {
+                dbUpdate.FixturesSmallUpdate = true;
+                await footballApiService.UpdateFixtures(DateTime.Now.AddHours(-5), DateTime.Now.AddHours(5));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Failed to update fixtures");
+            }
+
         }
         else
         {
@@ -69,8 +93,16 @@ public class DbUpdateHostedService : IHostedService, IDisposable
 
         if (await dbUpdateRepository.ShouldPerformStatisticsUpdate())
         {
-            dbUpdate.StatisticsUpdate = true;
-            await footballApiService.UpdateStatistics();
+            try
+            {
+                dbUpdate.StatisticsUpdate = true;
+                await footballApiService.UpdateStatistics();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Failed to update statistics");
+            }
+
         }
         else
         {
@@ -79,8 +111,16 @@ public class DbUpdateHostedService : IHostedService, IDisposable
         
         if (await dbUpdateRepository.ShouldPerformLineupsUpdate())
         {
-            dbUpdate.LineupsUpdate = true;
-            await footballApiService.UpdateLineups();
+            try
+            {
+                dbUpdate.LineupsUpdate = true;
+                await footballApiService.UpdateLineups();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Failed to update lineups");
+            }
+
         }
         else
         {
@@ -89,8 +129,15 @@ public class DbUpdateHostedService : IHostedService, IDisposable
         
         if (await dbUpdateRepository.ShouldPerformEventsUpdate())
         {
-            dbUpdate.EventsUpdate = true;
-            await footballApiService.UpdateEvents();
+            try
+            {
+                dbUpdate.EventsUpdate = true;
+                await footballApiService.UpdateEvents();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Failed to update events");
+            }
         }
         else
         {

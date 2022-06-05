@@ -24,7 +24,6 @@ export const FixtureDetailsDataSectionTabs = ({selectedTab, setSelectedTab}: Pro
                 <Tab value="stats" label={<Typography sx={fixtureDetailsDataSectionTabsLabelStyle}>Statistics</Typography>}/>
                 <Tab value="lineups" label={<Typography sx={fixtureDetailsDataSectionTabsLabelStyle}>Lineups</Typography>}/>
                 <Tab value="formation" label={<Typography sx={fixtureDetailsDataSectionTabsLabelStyle}>Formation</Typography>}/>
-                <Tab value="events" label={<Typography sx={fixtureDetailsDataSectionTabsLabelStyle}>Events</Typography>}/>
             </Tabs>
         </Box>
     );

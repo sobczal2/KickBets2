@@ -9,6 +9,8 @@ import {
 import {Link, NavLink} from "react-router-dom";
 import {useStore} from "../../app/stores/store";
 import {observer} from "mobx-react-lite";
+import agent from "../../app/api/agent";
+import {toast} from "react-toastify";
 
 type Props = {
     
@@ -22,6 +24,21 @@ export const NavBarAppUserBox = observer((props: Props) => {
         return (
             <Box sx={navBarAppUserBoxStyle}>
                 {store.identityStore.user.userName} - {store.identityStore.user.balance}$
+                <Button
+                    onClick={() => {
+                        agent.Identity.addBalance()
+                            .then(() => {
+                                toast("Balance added", {type: "success"})
+                                store.identityStore.aboutMe(false)
+                            })
+                            .catch(err => {
+                                toast(err.response.data.Errors.Balance || "Unknown error", {type: "error"})
+                            })
+                    }}
+                    color="secondary"
+                >
+                    Add balance!
+                </Button>
                 <Button
                     onClick={store.identityStore.logout}
                     color="secondary"

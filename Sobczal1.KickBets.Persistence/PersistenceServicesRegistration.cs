@@ -100,9 +100,7 @@ public static class PersistenceServicesRegistration
         {
             var users = new List<AppUser>
             {
-                new AppUser {UserName = "Kasia", Email = "kasia@test.com", Balance = 1e6, BalanceLastAddedAt = DateTime.Now.AddDays(-1)},
-                new AppUser {UserName = "Lukasz", Email = "lukasz@test.com", Balance = 1e6, BalanceLastAddedAt = DateTime.Now.AddDays(-1)},
-                new AppUser {UserName = "Tester", Email = "tester@test.com", Balance = 1e6, BalanceLastAddedAt = DateTime.Now.AddDays(-1)},
+                new() {UserName = "Tester", Email = "tester@test.com", Balance = 100, BalanceLastAddedAt = DateTime.Now.AddDays(-1)},
             };
 
             foreach (var user in users)
