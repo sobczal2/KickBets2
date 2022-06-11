@@ -13,35 +13,39 @@ namespace Sobczal1.KickBets.Application.Features.Bets.Handlers.Commands;
 
 public class CreateWdlhtBetCommandHandler : IRequestHandler<CreateWdlhtBetCommand, Unit>
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<AppUser> _userManager;
 
-    public CreateWdlhtBetCommandHandler(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManager)
+    public CreateWdlhtBetCommandHandler(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor,
+        UserManager<AppUser> userManager)
     {
         _unitOfWork = unitOfWork;
         _httpContextAccessor = httpContextAccessor;
         _userManager = userManager;
     }
-    
+
     public async Task<Unit> Handle(CreateWdlhtBetCommand command, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByEmailAsync(_httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Email)
+        var user = await _userManager.FindByEmailAsync(_httpContextAccessor.HttpContext?.User
+            .FindFirst(ClaimTypes.Email)
             ?.Value);
         if (user is null)
             throw new BadRequestException(new Dictionary<string, string> {{"User", "User not found"}});
-        
+
         var validator = new CreateWdlhtBetDtoValidator(user, _unitOfWork.FixtureRepository);
         var validationResult = await validator.ValidateAsync(command.CreateWdlhtBetDto, cancellationToken);
         if (validationResult.IsValid == false)
             throw new ValidationErrorsException(validationResult);
-        
+
         var fixture = await _unitOfWork.FixtureRepository.GetWithBetsData(command.CreateWdlhtBetDto.FixtureId);
-        if(fixture is null)
-            throw new BadRequestException(new Dictionary<string, string> {{"FixtureId", $"Fixture with id: {command.CreateWdlhtBetDto.FixtureId} not found"}});
-        
-        if(DateTime.Compare(fixture.Date, DateTime.Now) < 0)
-            throw new BadRequestException(new Dictionary<string, string> {{"FixtureId", $"Fixture with id: {command.CreateWdlhtBetDto.FixtureId} has already started"}});
+        if (fixture is null)
+            throw new BadRequestException(new Dictionary<string, string>
+                {{"FixtureId", $"Fixture with id: {command.CreateWdlhtBetDto.FixtureId} not found"}});
+
+        if (DateTime.Compare(fixture.Date, DateTime.Now) < 0)
+            throw new BadRequestException(new Dictionary<string, string>
+                {{"FixtureId", $"Fixture with id: {command.CreateWdlhtBetDto.FixtureId} has already started"}});
 
         var wdlhtBet = new WdlhtBet
         {
@@ -50,9 +54,9 @@ public class CreateWdlhtBetCommandHandler : IRequestHandler<CreateWdlhtBetComman
             Value = command.CreateWdlhtBetDto.Value,
             Status = "pending",
             TimeStamp = DateTime.Now,
-            WdlhtSide = command.CreateWdlhtBetDto.WdlhtSide,
+            WdlhtSide = command.CreateWdlhtBetDto.WdlhtSide
         };
-        
+
         switch (command.CreateWdlhtBetDto.WdlhtSide)
         {
             case "home":
@@ -70,7 +74,7 @@ public class CreateWdlhtBetCommandHandler : IRequestHandler<CreateWdlhtBetComman
 
         await _unitOfWork.BetRepository.Add(wdlhtBet);
         await _unitOfWork.Save();
-        
+
         return Unit.Value;
     }
 }

@@ -1,12 +1,10 @@
-// @flow 
+// @flow
 import * as React from 'react';
 import {Box, Button, Typography} from "@mui/material";
 import {homePageButtonStyle, homePageStyle, homePageTitleStyle} from "../../styles/app/pages/homePageStyle";
 import {useNavigate} from "react-router-dom";
 
-type Props = {
-    
-};
+type Props = {};
 export const HomePage = (props: Props) => {
 
     const navigate = useNavigate();

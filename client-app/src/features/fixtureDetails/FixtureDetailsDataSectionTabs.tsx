@@ -21,9 +21,18 @@ export const FixtureDetailsDataSectionTabs = ({selectedTab, setSelectedTab}: Pro
                 scrollButtons
                 allowScrollButtonsMobile
             >
-                <Tab value="stats" label={<Typography sx={fixtureDetailsDataSectionTabsLabelStyle}>Statistics</Typography>}/>
-                <Tab value="lineups" label={<Typography sx={fixtureDetailsDataSectionTabsLabelStyle}>Lineups</Typography>}/>
-                <Tab value="formation" label={<Typography sx={fixtureDetailsDataSectionTabsLabelStyle}>Formation</Typography>}/>
+                <Tab
+                    id="details-statistics-tab-selector"
+                    value="stats"
+                     label={<Typography sx={fixtureDetailsDataSectionTabsLabelStyle}>Statistics</Typography>}/>
+                <Tab
+                    id="details-lineups-tab-selector"
+                    value="lineups"
+                     label={<Typography sx={fixtureDetailsDataSectionTabsLabelStyle}>Lineups</Typography>}/>
+                <Tab
+                    id="details-formation-tab-selector"
+                    value="formation"
+                     label={<Typography sx={fixtureDetailsDataSectionTabsLabelStyle}>Formation</Typography>}/>
             </Tabs>
         </Box>
     );

@@ -9,14 +9,15 @@ namespace Sobczal1.KickBets.Application.Features.Lineups.Handlers.Queries;
 
 public class GetLineupByIdQueryHandler : IRequestHandler<GetLineupByIdQuery, LineupDto>
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
     public GetLineupByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
+
     public async Task<LineupDto> Handle(GetLineupByIdQuery query, CancellationToken cancellationToken)
     {
         var lineup = await _unitOfWork.LineupRepository.Get(query.Id);

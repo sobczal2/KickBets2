@@ -4,8 +4,8 @@ import agent from "../api/agent";
 
 export default class IdentityStore {
 
-    token: string|null = null;
-    user: UserDto|null = null;
+    token: string | null = null;
+    user: UserDto | null = null;
 
     constructor() {
         makeAutoObservable(this)
@@ -27,7 +27,7 @@ export default class IdentityStore {
     }
 
     aboutMe = (refreshToken: boolean) => {
-        if(!this.token) return
+        if (!this.token) return
         agent.Identity.aboutMe(refreshToken)
             .then(res => {
                 this.saveUserDto(res.data)
@@ -43,8 +43,7 @@ export default class IdentityStore {
 
     saveUserDto = (userDto: UserDto) => {
         this.user = userDto
-        if(userDto.token)
-        {
+        if (userDto.token) {
             localStorage.setItem("token", userDto.token)
             this.token = userDto.token
         }

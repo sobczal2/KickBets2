@@ -4,5 +4,4 @@ namespace Sobczal1.KickBets.Application.Contracts.Persistence.Football;
 
 public interface IVenueRepository : IGenericRepository<Venue>
 {
-    
 }

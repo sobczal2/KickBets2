@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sobczal1.KickBets.Application.DTOs.Identity;
+using Sobczal1.KickBets.Application.Features.Identity.Requests.Commands;
+using Sobczal1.KickBets.Application.Features.Identity.Requests.Queries;
 
 namespace Sobczal1.KickBets.Api.Controllers;
 
@@ -15,36 +17,38 @@ public class IdentityController : ControllerBase
     {
         _mediator = mediator;
     }
-    
+
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login([FromBody] LoginDto loginDto)
     {
         var user = await _mediator.Send(
-            new Sobczal1.KickBets.Application.Features.Identity.Requests.Commands.LoginCommand {LoginDto = loginDto});
+            new LoginCommand {LoginDto = loginDto});
         return Ok(user);
     }
-    
+
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register([FromBody] RegisterDto registerDto)
     {
         var user = await _mediator.Send(
-            new Sobczal1.KickBets.Application.Features.Identity.Requests.Commands.RegisterCommand {RegisterDto = registerDto});
+            new RegisterCommand {RegisterDto = registerDto});
         return Ok(user);
     }
 
-    [HttpGet, Authorize]
+    [HttpGet]
+    [Authorize]
     public async Task<ActionResult<UserDto>> GetCurrentUser([FromQuery] bool? refreshToken)
     {
         var user = await _mediator.Send(
-            new Sobczal1.KickBets.Application.Features.Identity.Requests.Queries.GetCurrentUserQuery {RefreshToken = refreshToken});
+            new GetCurrentUserQuery {RefreshToken = refreshToken});
         return Ok(user);
     }
-    
-    [HttpPost("addBalance"), Authorize]
+
+    [HttpPost("addBalance")]
+    [Authorize]
     public async Task<ActionResult<UserDto>> AddBalance()
     {
         var user = await _mediator.Send(
-            new Sobczal1.KickBets.Application.Features.Identity.Requests.Commands.AddBalanceCommand());
+            new AddBalanceCommand());
         return Ok(user);
     }
 }

@@ -1,9 +1,7 @@
-// @flow 
+// @flow
 import * as React from 'react';
 
-type Props = {
-    
-};
+type Props = {};
 export const FixtureDetailsDataSectionEventsTab = (props: Props) => {
     return (
         <div>

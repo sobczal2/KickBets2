@@ -4,14 +4,14 @@ import agent from "../api/agent";
 
 export default class TeamStore {
 
-    teamsCache: Map<number, TeamDto|undefined> = new Map<number, TeamDto|undefined>()
+    teamsCache: Map<number, TeamDto | undefined> = new Map<number, TeamDto | undefined>()
 
     constructor() {
         makeAutoObservable(this)
     }
 
     getTeamById = async (id: number) => {
-        if(this.teamsCache.has(id))
+        if (this.teamsCache.has(id))
             return this.teamsCache.get(id)
         const res = await agent.Teams.getById(id)
         runInAction(() => {

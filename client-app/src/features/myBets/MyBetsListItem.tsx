@@ -14,9 +14,10 @@ export const MyBetsListItem = ({bet}: Props) => {
 
     return (
         <Grid
+            className={bet.type.split(":")[0] + "-bet-item"}
             item
             xs={4}
-            sx={{ px: "2rem", boxSizing: "border-box", cursor: "pointer"}}
+            sx={{px: "2rem", boxSizing: "border-box", cursor: "pointer"}}
             onClick={() => navigate(`/fixtures/${bet.fixtureId}`)}
         >
             <Box
@@ -25,7 +26,13 @@ export const MyBetsListItem = ({bet}: Props) => {
                 {bet.homeTeamName} - {bet.awayTeamName}
             </Box>
             <Box
-                sx={{width: "100%", fontSize: "2rem", color: "primary.main", borderBottom: "5px solid", borderColor: "secondary.main"}}
+                sx={{
+                    width: "100%",
+                    fontSize: "2rem",
+                    color: "primary.main",
+                    borderBottom: "5px solid",
+                    borderColor: "secondary.main"
+                }}
             >
                 Your bet: {bet.description}
                 <br/>

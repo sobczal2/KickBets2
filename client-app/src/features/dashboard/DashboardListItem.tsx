@@ -1,9 +1,9 @@
-// @flow 
+// @flow
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {FixtureDto} from "../../app/models/football/fixtures";
 import {Box, Grid, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
 import {LeagueDto} from "../../app/models/football/leagues";
 import {
     dashboardListItemGridItemStyle,
@@ -34,11 +34,11 @@ export const DashboardListItem = observer(({fixture}: Props) => {
     const navigate = useNavigate()
     dayjs.extend(LocalizedFormat)
 
-    const [league, setLeague] = useState<LeagueDto|undefined>(undefined)
-    const [status, setStatus] = useState<StatusDto|undefined>(undefined)
-    const [homeTeam, setHomeTeam] = useState<TeamDto|undefined>(undefined)
-    const [awayTeam, setAwayTeam] = useState<TeamDto|undefined>(undefined)
-    const [score, setScore] = useState<ScoreDto|undefined>(undefined)
+    const [league, setLeague] = useState<LeagueDto | undefined>(undefined)
+    const [status, setStatus] = useState<StatusDto | undefined>(undefined)
+    const [homeTeam, setHomeTeam] = useState<TeamDto | undefined>(undefined)
+    const [awayTeam, setAwayTeam] = useState<TeamDto | undefined>(undefined)
+    const [score, setScore] = useState<ScoreDto | undefined>(undefined)
 
     const started = ["FT", "AET", "PEN", "1H", "HT", "2H", "ET", "P", "BT", "LIVE"].includes(status?.short || "")
 
@@ -51,15 +51,13 @@ export const DashboardListItem = observer(({fixture}: Props) => {
             .then(res => {
                 setStatus(res.data)
             })
-        if(fixture.homeTeamId)
-        {
+        if (fixture.homeTeamId) {
             store.teamStore.getTeamById(fixture.homeTeamId)
                 .then(team => {
                     setHomeTeam(team)
                 })
         }
-        if(fixture.awayTeamId)
-        {
+        if (fixture.awayTeamId) {
             store.teamStore.getTeamById(fixture.awayTeamId)
                 .then(team => {
                     setAwayTeam(team)
@@ -73,7 +71,7 @@ export const DashboardListItem = observer(({fixture}: Props) => {
     }, [fixture, store.leagueStore, store.teamStore])
 
     return (
-        <Box sx={dashboardListItemStyle}>
+        <Box sx={dashboardListItemStyle} className="dashboard-list-item-box">
             <Grid
                 container
                 onClick={() => navigate(`/fixtures/${fixture.id}`)}

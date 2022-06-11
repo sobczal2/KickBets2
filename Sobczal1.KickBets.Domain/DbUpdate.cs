@@ -7,6 +7,7 @@ public class DbUpdate : BaseDomainEntity
         TimeStamp = DateTime.Now;
         LeaguesUpdate = false;
     }
+
     public DateTime TimeStamp { get; set; }
     public bool LeaguesUpdate { get; set; }
     public bool FixturesBigUpdate { get; set; }

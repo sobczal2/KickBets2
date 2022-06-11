@@ -1,6 +1,4 @@
-export const fixtureDetailsDataSectionStyle = {
-
-}
+export const fixtureDetailsDataSectionStyle = {}
 
 export const fixtureDetailsDataSectionInfoOuterBoxStyle = {
     color: "text.secondary",
@@ -60,7 +58,5 @@ export const fixtureDetailsDataSectionTabsTabsStyle = {
     }
 }
 
-export const fixtureDetailsDataSectionTabsLabelStyle = {
-
-}
+export const fixtureDetailsDataSectionTabsLabelStyle = {}
 

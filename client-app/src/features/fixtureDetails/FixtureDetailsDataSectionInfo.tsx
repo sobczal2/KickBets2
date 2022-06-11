@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {FixtureDto} from "../../app/models/football/fixtures";
 import {Box} from "@mui/material";
 import {AccessTimeFilled, Flag, Place, Sports} from "@mui/icons-material";
-import {useEffect, useState} from "react";
 import {LeagueDto} from "../../app/models/football/leagues";
 import {VenueDto} from "../../app/models/football/venues";
 import agent from "../../app/api/agent";
@@ -17,12 +17,11 @@ type Props = {
 };
 export const FixtureDetailsDataSectionInfo = ({fixture}: Props) => {
 
-    const [league, setLeague] = useState<LeagueDto|undefined>(undefined)
-    const [venue, setVenue] = useState<VenueDto|undefined>(undefined)
+    const [league, setLeague] = useState<LeagueDto | undefined>(undefined)
+    const [venue, setVenue] = useState<VenueDto | undefined>(undefined)
 
     useEffect(() => {
-        if(fixture && fixture.venueId)
-        {
+        if (fixture && fixture.venueId) {
             agent.Venues.getById(fixture.venueId)
                 .then(res => {
                     setVenue(res.data)
@@ -31,8 +30,7 @@ export const FixtureDetailsDataSectionInfo = ({fixture}: Props) => {
     }, [fixture, fixture?.venueId])
 
     useEffect(() => {
-        if(fixture && fixture.venueId)
-        {
+        if (fixture && fixture.venueId) {
             agent.Leagues.getById(fixture.leagueId)
                 .then(res => {
                     setLeague(res.data)

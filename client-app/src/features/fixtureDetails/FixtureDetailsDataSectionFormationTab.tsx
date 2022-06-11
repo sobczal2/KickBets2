@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from 'react';
 import {LineupDto} from "../../app/models/football/lineups";
 import {PlayerDto} from "../../app/models/football/players";
 import agent from "../../app/api/agent";
@@ -61,7 +61,7 @@ export const FixtureDetailsDataSectionFormationTab = ({fixture}: Props) => {
                 }
             }
         }
-    }, [homeLineup, awayLineup])
+    }, [homeLineup, awayLineup, homePlayers, awayPlayers])
 
     useEffect(() => {
         if (!(fixture && fixture.homeLineupId && fixture.awayLineupId)) return
@@ -115,7 +115,9 @@ export const FixtureDetailsDataSectionFormationTab = ({fixture}: Props) => {
 
     if (loading) {
         return (
-            <Box sx={{
+            <Box
+                id="details-formation-tab"
+                sx={{
                 ...fixtureDetailsDataSectionStatisticsTabOuterBoxStyle,
                 display: "flex",
                 alignItems: "center",
@@ -128,7 +130,9 @@ export const FixtureDetailsDataSectionFormationTab = ({fixture}: Props) => {
 
     if (!homeLineup || !awayLineup) {
         return (
-            <Box sx={{
+            <Box
+                id="details-formation-tab"
+                sx={{
                 ...fixtureDetailsDataSectionStatisticsTabOuterBoxStyle,
                 display: "flex",
                 alignItems: "center",
@@ -145,9 +149,9 @@ export const FixtureDetailsDataSectionFormationTab = ({fixture}: Props) => {
     }
 
 
-
     return (
         <Box
+            id="details-formation-tab"
             sx={fixtureDetailsDataSectionFormationTabOuterBoxStyle}
         >
             <Box

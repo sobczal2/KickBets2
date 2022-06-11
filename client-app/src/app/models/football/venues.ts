@@ -1,4 +1,4 @@
-import { BaseDto } from "../common/base";
+import {BaseDto} from "../common/base";
 
 export interface VenueDto extends BaseDto {
     name: string;

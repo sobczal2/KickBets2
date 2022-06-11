@@ -5,21 +5,30 @@ using Xunit;
 
 namespace Sobczal1.KickBets.ClientApp.Tests;
 
-public class HomePageTest
+public class HomePageTest : IDisposable
 {
+    public HomePageTest()
+    {
+        ChromeDriver = new ChromeDriver();
+    }
+
+    public ChromeDriver ChromeDriver { get; set; }
+
+    public void Dispose()
+    {
+        ChromeDriver.Dispose();
+    }
+
     [Fact]
     public void Should_Redirect_OnGetStartedButtonClicked()
     {
-        var driver = new ChromeDriver();
-        driver.Navigate().GoToUrl("http://localhost:3000/");
-        var button = driver.FindElement(By.Id("homePageButton"));
+        ChromeDriver.Navigate().GoToUrl("http://localhost:3000/");
+        var button = ChromeDriver.FindElement(By.Id("homePageButton"));
         button.Click();
 
         var expectedUrl = "http://localhost:3000/fixtures";
-        var actualUrl = driver.Url;
-        
-        driver.Dispose();
-        
+        var actualUrl = ChromeDriver.Url;
+
         Assert.Equal(expectedUrl, actualUrl);
     }
 }

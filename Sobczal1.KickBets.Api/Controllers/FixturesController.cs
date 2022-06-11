@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sobczal1.KickBets.Application.DTOs.Football.Events;
 using Sobczal1.KickBets.Application.DTOs.Football.Fixtures;
+using Sobczal1.KickBets.Application.Features.Fixtures.Requests.Queries;
 using Sobczal1.KickBets.Application.Models.Pagination;
 
 namespace Sobczal1.KickBets.Api.Controllers;
@@ -19,11 +19,12 @@ public class FixturesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<PaginatedResponse<FixtureDto>>> List([FromQuery] PaginatedRequestData paginatedRequestData, [FromQuery] FixtureListParams fixtureListParams)
+    public async Task<ActionResult<PaginatedResponse<FixtureDto>>> List(
+        [FromQuery] PaginatedRequestData paginatedRequestData, [FromQuery] FixtureListParams fixtureListParams)
     {
         var fixtures =
             await _mediator.Send(
-                new Sobczal1.KickBets.Application.Features.Fixtures.Requests.Queries.GetFixtureListQuery
+                new GetFixtureListQuery
                     {PaginatedRequestData = paginatedRequestData, FixtureListParams = fixtureListParams});
         return Ok(fixtures);
     }
@@ -33,17 +34,16 @@ public class FixturesController : ControllerBase
     {
         var fixture =
             await _mediator.Send(
-                new Sobczal1.KickBets.Application.Features.Fixtures.Requests.Queries.GetFixtureByIdQuery {Id = id});
+                new GetFixtureByIdQuery {Id = id});
         return Ok(fixture);
     }
-    
+
     [HttpGet("{id:int}/events")]
     public async Task<ActionResult<List<EventDto>>> ListEventsByFixtureId([FromRoute] int id)
     {
         var events =
             await _mediator.Send(
-                new Sobczal1.KickBets.Application.Features.Fixtures.Requests.Queries.GetEventsListQuery()
-                    {FixtureId = id});
+                new GetEventsListQuery {FixtureId = id});
         return Ok(events);
     }
 }

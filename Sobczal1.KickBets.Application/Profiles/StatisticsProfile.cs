@@ -45,7 +45,7 @@ public class StatisticsProfile : Profile
             .ForMember(s => s.Possession,
                 opt => opt.MapFrom(q => GetDouble(q.Statistics.FirstOrDefault(s => s.Type == "Ball Possession"))))
             .ForMember(s => s.Passes,
-            opt => opt.MapFrom(q => GetDouble(q.Statistics.FirstOrDefault(s => s.Type == "Passes %"))));
+                opt => opt.MapFrom(q => GetDouble(q.Statistics.FirstOrDefault(s => s.Type == "Passes %"))));
         CreateMap<StatisticsRoot, HomeStatistics>();
         CreateMap<StatisticsRoot, AwayStatistics>();
 
@@ -56,13 +56,11 @@ public class StatisticsProfile : Profile
     {
         if (statistics is null) return null;
         if (statistics.Value is JsonElement element)
-        {
-            if(element.TryGetInt32(out var value))
+            if (element.TryGetInt32(out var value))
                 return value;
-        }
         return null;
     }
-    
+
     private double? GetDouble(StatisticsApiModel? statistics)
     {
         if (statistics is null) return null;
@@ -72,11 +70,9 @@ public class StatisticsProfile : Profile
             if (string.IsNullOrEmpty(value))
                 return null;
             value = value.Replace("%", "");
-            if (double.TryParse(value, out var result))
-            {
-                return result / 100.0;
-            }
+            if (double.TryParse(value, out var result)) return result / 100.0;
         }
+
         return null;
     }
 }

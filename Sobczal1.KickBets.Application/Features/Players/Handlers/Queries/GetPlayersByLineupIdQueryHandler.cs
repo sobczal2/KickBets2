@@ -10,18 +10,19 @@ namespace Sobczal1.KickBets.Application.Features.Players.Handlers.Queries;
 
 public class GetPlayersByLineupIdQueryHandler : IRequestHandler<GetPlayersByLineupIdQuery, List<PlayerDto>>
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
     public GetPlayersByLineupIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
+
     public async Task<List<PlayerDto>> Handle(GetPlayersByLineupIdQuery query, CancellationToken cancellationToken)
     {
         if (!query.LineupId.HasValue)
-            throw new BadRequestException(new Dictionary<string, string>{{"LineupId", "LineupId must not be null."}});
+            throw new BadRequestException(new Dictionary<string, string> {{"LineupId", "LineupId must not be null."}});
         if (!await _unitOfWork.LineupRepository.Exists(query.LineupId.Value))
             throw new NotFoundException("LineupId", $"Lineup with id: {query.LineupId} not found.");
 

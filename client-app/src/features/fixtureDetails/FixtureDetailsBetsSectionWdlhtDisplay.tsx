@@ -1,14 +1,20 @@
 // @flow
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {
-    Box, Button, CircularProgress,
+    Box,
+    Button,
+    CircularProgress,
     Dialog,
     DialogContent,
     DialogTitle,
-    FormControl, FormControlLabel,
+    FormControl,
+    FormControlLabel,
     FormLabel,
-    Grid, Radio,
-    RadioGroup, TextField,
+    Grid,
+    Radio,
+    RadioGroup,
+    TextField,
     Typography
 } from "@mui/material";
 import {
@@ -19,7 +25,6 @@ import {
     fixtureDetailsBetsSectionDisplayTitleStyle
 } from "../../styles/features/fixtureDetails/fixtureDetailsBetsSectionStyle";
 import {FixtureDto} from "../../app/models/football/fixtures";
-import {useEffect, useState} from "react";
 import {WdlhtBetsDataDto} from "../../app/models/bets/wdlhtBets";
 import agent from "../../app/api/agent";
 import dayjs from "dayjs";
@@ -99,19 +104,20 @@ export const FixtureDetailsBetsSectionWdlhtDisplay = ({fixture}: Props) => {
                                 onChange={e => setSide(e.target.value as "home" | "draw" | "away")}
                                 sx={{display: "flex", flexDirection: "row"}}
                             >
-                                <FormControlLabel value="home" control={<Radio />} label={`${homeTeamName} win`}/>
+                                <FormControlLabel value="home" control={<Radio/>} label={`${homeTeamName} win`}/>
                                 <FormControlLabel value="draw" control={<Radio/>} label="draw"/>
                                 <FormControlLabel value="away" control={<Radio/>} label={`${awayTeamName} win`}/>
                             </RadioGroup>
                         </FormControl>
                         <TextField
+                            id="wdlht-input-field"
                             value={value}
                             onChange={e => {
-                                if(/^([0-9]+(\.[0-9]+)?|)$/.test(e.target.value))
+                                if (/^([0-9]+(\.[0-9]+)?|)$/.test(e.target.value))
                                     setValue(e.target.value)
                             }}
                             onBlur={() => {
-                                if(value === "")
+                                if (value === "")
                                     setValue("10")
                             }}
                             // error
@@ -121,11 +127,22 @@ export const FixtureDetailsBetsSectionWdlhtDisplay = ({fixture}: Props) => {
                         />
                     </Box>
                     <Box
-                        sx={{display: "flex", width: "100%", flexDirection: "row", justifyContent: "space-between", mt: "1rem"}}
+                        sx={{
+                            display: "flex",
+                            width: "100%",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            mt: "1rem"
+                        }}
                     >
                         <Button
+                            id="wdlht-modal-submit-button"
                             sx={{fontSize: "1.5rem", color: "secondary.main"}}
                             onClick={() => {
+                                if (!store.identityStore.user) {
+                                    toast("Login first!", {type: "error"})
+                                    return
+                                }
                                 setSubmitting(true)
                                 agent.Bets.createWdlhtBet(fixture!.id, parseFloat(value), side)
                                     .then(res => {
@@ -140,7 +157,7 @@ export const FixtureDetailsBetsSectionWdlhtDisplay = ({fixture}: Props) => {
                                     })
                             }}
                         >
-                            {submitting ? <CircularProgress color="secondary" size="1.5rem" /> : "Submit"}
+                            {submitting ? <CircularProgress color="secondary" size="1.5rem"/> : "Submit"}
                         </Button>
                         <Button
                             onClick={() => {
@@ -155,6 +172,7 @@ export const FixtureDetailsBetsSectionWdlhtDisplay = ({fixture}: Props) => {
                 </DialogContent>
             </Dialog>
             <Box
+                id="wdlht-panel"
                 onClick={() => {
                     if (available) {
                         setModalVisible(true)
@@ -162,7 +180,7 @@ export const FixtureDetailsBetsSectionWdlhtDisplay = ({fixture}: Props) => {
                 }}
             >
                 <Box sx={fixtureDetailsBetsSectionDisplayHeaderStyle}>
-                    Bet: Score at full time
+                    Bet: Score at half time
                 </Box>
                 <Grid container>
                     <Grid item xs={4}>
@@ -170,7 +188,7 @@ export const FixtureDetailsBetsSectionWdlhtDisplay = ({fixture}: Props) => {
                             <Typography
                                 sx={fixtureDetailsBetsSectionDisplayTitleStyle}
                             >
-                                {homeTeamName} to win at full time
+                                {homeTeamName} to win at half time
                             </Typography>
                             <Typography
                                 sx={fixtureDetailsBetsSectionDisplayMultiplierStyle}
@@ -184,7 +202,7 @@ export const FixtureDetailsBetsSectionWdlhtDisplay = ({fixture}: Props) => {
                             <Typography
                                 sx={fixtureDetailsBetsSectionDisplayTitleStyle}
                             >
-                                Draw at full time
+                                Draw at half time
                             </Typography>
                             <Typography
                                 sx={fixtureDetailsBetsSectionDisplayMultiplierStyle}
@@ -198,7 +216,7 @@ export const FixtureDetailsBetsSectionWdlhtDisplay = ({fixture}: Props) => {
                             <Typography
                                 sx={fixtureDetailsBetsSectionDisplayTitleStyle}
                             >
-                                {awayTeamName} to win at full time
+                                {awayTeamName} to win at half time
                             </Typography>
                             <Typography
                                 sx={fixtureDetailsBetsSectionDisplayMultiplierStyle}

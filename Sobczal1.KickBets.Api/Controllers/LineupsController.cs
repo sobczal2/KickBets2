@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Sobczal1.KickBets.Application.DTOs.Football.Lineups;
 using Sobczal1.KickBets.Application.DTOs.Football.Players;
+using Sobczal1.KickBets.Application.Features.Lineups.Requests.Queries;
+using Sobczal1.KickBets.Application.Features.Players.Requests.Queries;
 
 namespace Sobczal1.KickBets.Api.Controllers;
 
@@ -20,17 +22,17 @@ public class LineupsController : ControllerBase
     public async Task<ActionResult<LineupDto>> GetById([FromRoute] int id)
     {
         var lineup =
-            await _mediator.Send(new Sobczal1.KickBets.Application.Features.Lineups.Requests.Queries.GetLineupByIdQuery
+            await _mediator.Send(new GetLineupByIdQuery
                 {Id = id});
         return Ok(lineup);
     }
-    
+
     [HttpGet("{id:int}/players")]
     public async Task<ActionResult<List<PlayerDto>>> ListPlayersByLineupId([FromRoute] int id)
     {
         var players =
             await _mediator.Send(
-                new Sobczal1.KickBets.Application.Features.Players.Requests.Queries.GetPlayersByLineupIdQuery
+                new GetPlayersByLineupIdQuery
                     {LineupId = id});
         return Ok(players);
     }

@@ -12,6 +12,7 @@ public class BetsDataRepository : IBetsDataRepository
     {
         _dbContext = dbContext;
     }
+
     public async Task<BetsData?> Get(int id)
     {
         return await _dbContext.BetsData

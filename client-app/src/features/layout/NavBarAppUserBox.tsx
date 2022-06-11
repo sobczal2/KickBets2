@@ -1,4 +1,4 @@
-// @flow 
+// @flow
 import * as React from 'react';
 import {Box, Button, ButtonGroup} from "@mui/material";
 import {
@@ -6,25 +6,25 @@ import {
     navBarAppUserButtonGroupStyle,
     navBarAppUserButtonStyle
 } from "../../styles/features/layout/navBarAppUserBoxStyle";
-import {Link, NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useStore} from "../../app/stores/store";
 import {observer} from "mobx-react-lite";
 import agent from "../../app/api/agent";
 import {toast} from "react-toastify";
 
-type Props = {
-    
-};
+type Props = {};
 export const NavBarAppUserBox = observer((props: Props) => {
 
     const store = useStore();
 
-    if(store.identityStore.user)
-    {
+    if (store.identityStore.user) {
         return (
             <Box sx={navBarAppUserBoxStyle}>
                 {store.identityStore.user.userName} - {store.identityStore.user.balance}$
                 <Button
+                    id="navbar-add-balance-button"
+                    size="large"
+                    sx={{fontSize: "1.5rem", ml: "0.5rem"}}
                     onClick={() => {
                         agent.Identity.addBalance()
                             .then(() => {
@@ -40,6 +40,9 @@ export const NavBarAppUserBox = observer((props: Props) => {
                     Add balance!
                 </Button>
                 <Button
+                    id="navbar-logout-button"
+                    size="large"
+                    sx={{fontSize: "1.5rem", ml: "0.5rem"}}
                     onClick={store.identityStore.logout}
                     color="secondary"
                 >

@@ -21,7 +21,7 @@ public static class ApplicationServicesRegistration
         services.AddScoped<TokenService>();
 
         ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("en-US");
-        
+
         return services;
     }
 }

@@ -1,6 +1,6 @@
-// @flow 
+// @flow
 import * as React from 'react';
-import {useState} from "react";
+import {useState} from 'react';
 import {FixtureListParams} from "../models/football/fixtures";
 import {DashboardList} from "../../features/dashboard/DashboardList";
 import {Box, Grid} from "@mui/material";
@@ -15,11 +15,11 @@ export const DashboardPage = (props: Props) => {
     return (
         <Box sx={DashboardPageStyle}>
             <Grid container>
-                <Grid item xs={10} >
-                    <DashboardList fixtureListParams={fixtureListParams} />
+                <Grid item xs={10}>
+                    <DashboardList fixtureListParams={fixtureListParams}/>
                 </Grid>
                 <Grid item xs={2}>
-                    <DashboardFilter fixtureListParams={fixtureListParams} setFixtureListParams={setFixtureListParams} />
+                    <DashboardFilter fixtureListParams={fixtureListParams} setFixtureListParams={setFixtureListParams}/>
                 </Grid>
             </Grid>
         </Box>

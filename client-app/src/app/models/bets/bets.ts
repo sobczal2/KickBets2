@@ -1,4 +1,4 @@
-import { BaseDto } from "../common/base"
+import {BaseDto} from "../common/base"
 import {WdlhtBetsDataDto} from "./wdlhtBets";
 import {WdlftBetsDataDto} from "./wdlftBets";
 

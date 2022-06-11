@@ -1,13 +1,14 @@
 // @flow
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {FixtureDto} from "../../app/models/football/fixtures";
 import {Box, Grid} from "@mui/material";
 import {
     fixtureDetailsDataSectionScoreOuterBoxStyle,
     fixtureDetailsDataSectionScoreTeamLogoBoxStyle,
-    fixtureDetailsDataSectionScoreTeamLogoGridItemStyle, fixtureDetailsDataSectionScoreTeamNameGridItemStyle
+    fixtureDetailsDataSectionScoreTeamLogoGridItemStyle,
+    fixtureDetailsDataSectionScoreTeamNameGridItemStyle
 } from "../../styles/features/fixtureDetails/fixtureDetailsDataSectionStyle";
-import {useEffect, useState} from "react";
 import {TeamDto} from "../../app/models/football/teams";
 import agent from "../../app/api/agent";
 import {ScoreDto} from "../../app/models/football/scores";
@@ -17,13 +18,12 @@ type Props = {
 };
 export const FixtureDetailsDataSectionScore = ({fixture}: Props) => {
 
-    const [homeTeam, setHomeTeam] = useState<TeamDto|undefined>(undefined);
-    const [awayTeam, setAwayTeam] = useState<TeamDto|undefined>(undefined);
-    const [score, setScore] = useState<ScoreDto|undefined>(undefined);
+    const [homeTeam, setHomeTeam] = useState<TeamDto | undefined>(undefined);
+    const [awayTeam, setAwayTeam] = useState<TeamDto | undefined>(undefined);
+    const [score, setScore] = useState<ScoreDto | undefined>(undefined);
 
     useEffect(() => {
-        if(fixture && fixture.homeTeamId)
-        {
+        if (fixture && fixture.homeTeamId) {
             agent.Teams.getById(fixture.homeTeamId)
                 .then(res => {
                     setHomeTeam(res.data)
@@ -32,8 +32,7 @@ export const FixtureDetailsDataSectionScore = ({fixture}: Props) => {
     }, [fixture, fixture?.homeTeamId])
 
     useEffect(() => {
-        if(fixture && fixture.awayTeamId)
-        {
+        if (fixture && fixture.awayTeamId) {
             agent.Teams.getById(fixture.awayTeamId)
                 .then(res => {
                     setAwayTeam(res.data)
@@ -42,8 +41,7 @@ export const FixtureDetailsDataSectionScore = ({fixture}: Props) => {
     }, [fixture, fixture?.awayTeamId])
 
     useEffect(() => {
-        if(fixture && fixture.scoreId)
-        {
+        if (fixture && fixture.scoreId) {
             agent.Scores.getById(fixture.scoreId)
                 .then(res => {
                     setScore(res.data)
@@ -54,7 +52,8 @@ export const FixtureDetailsDataSectionScore = ({fixture}: Props) => {
     return (
         <Box sx={fixtureDetailsDataSectionScoreOuterBoxStyle}>
             <Grid container>
-                <Grid item xs={2} sx={{...fixtureDetailsDataSectionScoreTeamLogoGridItemStyle, justifyContent: "right"}}>
+                <Grid item xs={2}
+                      sx={{...fixtureDetailsDataSectionScoreTeamLogoGridItemStyle, justifyContent: "right"}}>
                     <Box
                         component="img"
                         alt="home team logo"

@@ -4,9 +4,7 @@ import {Box} from "@mui/material";
 import {NavBarNavigationButton} from "./NavBarNavigationButton";
 import {navBarNavigationButtonsBoxStyle} from "../../styles/features/layout/navBarNavigationButtonsBoxStyle";
 
-type Props = {
-
-};
+type Props = {};
 export const NavBarNavigationButtonsBox = (props: Props) => {
     return (
         <Box sx={navBarNavigationButtonsBoxStyle}>

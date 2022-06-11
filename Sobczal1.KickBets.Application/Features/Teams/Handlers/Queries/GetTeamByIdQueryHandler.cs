@@ -9,18 +9,19 @@ namespace Sobczal1.KickBets.Application.Features.Teams.Handlers.Queries;
 
 public class GetTeamByIdQueryHandler : IRequestHandler<GetTeamByIdQuery, TeamDto>
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
     public GetTeamByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
+
     public async Task<TeamDto> Handle(GetTeamByIdQuery query, CancellationToken cancellationToken)
     {
         var team = await _unitOfWork.TeamRepository.Get(query.Id);
-        if(team is null)
+        if (team is null)
             throw new NotFoundException("id", $"Team with id: {query.Id} not found.");
         return _mapper.Map<TeamDto>(team);
     }

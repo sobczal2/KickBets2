@@ -18,10 +18,10 @@ namespace Sobczal1.KickBets.Application.Services.ApiFootball;
 
 public class FootballApiService
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IConfiguration _configuration;
     private readonly ILogger<FootballApiService> _logger;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
     public FootballApiService(IUnitOfWork unitOfWork, IConfiguration configuration, ILogger<FootballApiService> logger,
         IMapper mapper)
@@ -36,12 +36,8 @@ public class FootballApiService
     {
         var fetched = 0;
         foreach (var leagueId in _configuration.GetSection("ApiFootball:TrackedLeagues").Get<int[]>())
-        {
             if (await UpdateLeague(leagueId))
-            {
                 fetched++;
-            }
-        }
 
         await _unitOfWork.Save();
 
@@ -53,12 +49,8 @@ public class FootballApiService
         var fetched = 0;
         var trackedLeagues = _configuration.GetSection("ApiFootball:TrackedLeagues").Get<int[]>();
         foreach (var league in trackedLeagues)
-        {
             if (await UpdateFixture(league, from, to))
-            {
                 fetched++;
-            }
-        }
 
         await _unitOfWork.Save();
 
@@ -76,12 +68,8 @@ public class FootballApiService
                  (f.HomeStatistics == null ||
                   f.AwayStatistics == null))).AsNoTracking().ToListAsync();
         foreach (var fixture in ongoingOrFrequentlyEndedFixturesOrNotUpdated)
-        {
             if (await UpdateStatistics(fixture.Id))
-            {
                 fetched++;
-            }
-        }
 
         await _unitOfWork.Save();
 
@@ -100,12 +88,8 @@ public class FootballApiService
                   f.AwayLineup == null))).AsNoTracking().ToListAsync();
 
         foreach (var fixture in ongoingOrFrequentlyEndedFixturesOrNotUpdated)
-        {
             if (await UpdateLineups(fixture.Id))
-            {
                 fetched++;
-            }
-        }
 
         await _unitOfWork.Save();
 
@@ -124,12 +108,8 @@ public class FootballApiService
                   f.AwayEvents.Count == 0))).AsNoTracking().ToListAsync();
 
         foreach (var fixture in ongoingOrFrequentlyEndedFixturesOrNotUpdated)
-        {
             if (await UpdateEvents(fixture.Id))
-            {
                 fetched++;
-            }
-        }
 
         await _unitOfWork.Save();
 
@@ -155,22 +135,15 @@ public class FootballApiService
             return false;
         }
 
-        if (response.Response.Count == 0)
-        {
-            _logger.LogWarning($"No fixtures fetched for league with id: {leagueId}");
-        }
+        if (response.Response.Count == 0) _logger.LogWarning($"No fixtures fetched for league with id: {leagueId}");
 
         foreach (var fixture in response.Response)
         {
             var fixtureInDb = await _unitOfWork.FixtureRepository.Get(fixture.Fixture.Id);
             if (fixtureInDb != null)
-            {
                 await UpdateFixtureAlreadyInDb(fixture, fixtureInDb, leagueId);
-            }
             else
-            {
                 await UpdateFixtureNotYetInDb(fixture, leagueId);
-            }
         }
 
         return true;
@@ -200,27 +173,17 @@ public class FootballApiService
     private async Task FixFixtureOnInsert(Fixture fixture)
     {
         if (fixture.VenueId.HasValue)
-        {
             if (!await _unitOfWork.VenueRepository.Exists(fixture.VenueId.Value))
                 if (!await UpdateVenue(fixture.VenueId.Value))
-                {
                     fixture.VenueId = null;
-                }
-        }
 
         var homeTeam = await _unitOfWork.TeamRepository.Get(fixture.HomeTeam.Id);
 
-        if (homeTeam is not null)
-        {
-            fixture.HomeTeam = homeTeam;
-        }
+        if (homeTeam is not null) fixture.HomeTeam = homeTeam;
 
         var awayTeam = await _unitOfWork.TeamRepository.Get(fixture.AwayTeam.Id);
 
-        if (awayTeam is not null)
-        {
-            fixture.AwayTeam = awayTeam;
-        }
+        if (awayTeam is not null) fixture.AwayTeam = awayTeam;
     }
 
     private async Task<bool> UpdateLeague(int leagueId)
@@ -264,7 +227,6 @@ public class FootballApiService
             _logger.LogError($"Update failed for league with id: {leagueId}");
             return false;
         }
-        
     }
 
     private async Task<bool> UpdateVenue(int venueId)
@@ -467,10 +429,7 @@ public class FootballApiService
                     player.Starting11 = false;
                     return player;
                 }));
-                foreach (var player in homeLineupInDb.Players)
-                {
-                    await _unitOfWork.PlayerRepository.Delete(player);
-                }
+                foreach (var player in homeLineupInDb.Players) await _unitOfWork.PlayerRepository.Delete(player);
 
                 await _unitOfWork.Save();
                 homeLineupInDb.Players = playersList;
@@ -523,10 +482,7 @@ public class FootballApiService
                     player.Starting11 = false;
                     return player;
                 }));
-                foreach (var player in awayLineupInDb.Players)
-                {
-                    await _unitOfWork.PlayerRepository.Delete(player);
-                }
+                foreach (var player in awayLineupInDb.Players) await _unitOfWork.PlayerRepository.Delete(player);
 
                 await _unitOfWork.Save();
                 awayLineupInDb.Players = playersList;
@@ -583,18 +539,13 @@ public class FootballApiService
                 return false;
             }
 
-            foreach (var fixtureEvent in fixtureInDb.HomeEvents)
-            {
-                await _unitOfWork.EventRepository.Delete(fixtureEvent);
-            }
+            foreach (var fixtureEvent in fixtureInDb.HomeEvents) await _unitOfWork.EventRepository.Delete(fixtureEvent);
 
             await _unitOfWork.Save();
 
             var homeList = new List<HomeEvent>();
             foreach (var fixtureEvent in response.Response.Where(r => r.Team.Id == homeTeamId))
-            {
                 homeList.Add(_mapper.Map<HomeEvent>(fixtureEvent));
-            }
 
             fixtureInDb.HomeEvents = homeList;
 
@@ -612,18 +563,13 @@ public class FootballApiService
                 return false;
             }
 
-            foreach (var fixtureEvent in fixtureInDb.AwayEvents)
-            {
-                await _unitOfWork.EventRepository.Delete(fixtureEvent);
-            }
+            foreach (var fixtureEvent in fixtureInDb.AwayEvents) await _unitOfWork.EventRepository.Delete(fixtureEvent);
 
             await _unitOfWork.Save();
 
             var awayList = new List<AwayEvent>();
             foreach (var fixtureEvent in response.Response.Where(r => r.Team.Id == awayTeamId))
-            {
                 awayList.Add(_mapper.Map<AwayEvent>(fixtureEvent));
-            }
 
             fixtureInDb.AwayEvents = awayList;
 

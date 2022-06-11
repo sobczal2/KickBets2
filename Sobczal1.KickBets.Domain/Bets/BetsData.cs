@@ -7,6 +7,7 @@ public class BetsData : BaseDomainEntity
         WdlftBetsData = new WdlftBetsData();
         WdlhtBetsData = new WdlhtBetsData();
     }
+
     public int WdlftBetsDataId { get; set; }
     public WdlftBetsData WdlftBetsData { get; set; }
     public int WdlhtBetsDataId { get; set; }

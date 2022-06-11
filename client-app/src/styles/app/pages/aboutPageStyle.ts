@@ -1,2 +1,1 @@
-export const aboutPageStyle = {
-}
+export const aboutPageStyle = {}

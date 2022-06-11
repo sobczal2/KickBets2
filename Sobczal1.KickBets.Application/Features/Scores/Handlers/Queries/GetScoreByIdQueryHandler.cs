@@ -9,14 +9,15 @@ namespace Sobczal1.KickBets.Application.Features.Scores.Handlers.Queries;
 
 public class GetScoreByIdQueryHandler : IRequestHandler<GetScoreByIdQuery, ScoreDto>
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
     public GetScoreByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
+
     public async Task<ScoreDto> Handle(GetScoreByIdQuery query, CancellationToken cancellationToken)
     {
         var score = await _unitOfWork.ScoreRepository.Get(query.Id);

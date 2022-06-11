@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Sobczal1.KickBets.Application.DTOs.Football.Scores;
+using Sobczal1.KickBets.Application.Features.Scores.Requests.Queries;
 
 namespace Sobczal1.KickBets.Api.Controllers;
 
@@ -14,12 +15,12 @@ public class ScoresController : ControllerBase
     {
         _mediator = mediator;
     }
-    
+
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ScoreDto>> GetById([FromRoute] int id)
     {
         var score =
-            await _mediator.Send(new Sobczal1.KickBets.Application.Features.Scores.Requests.Queries.GetScoreByIdQuery
+            await _mediator.Send(new GetScoreByIdQuery
                 {Id = id});
         return Ok(score);
     }

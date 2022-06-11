@@ -7,14 +7,15 @@ namespace Sobczal1.KickBets.Persistence.Repositories;
 
 public class DbUpdateRepository : IDbUpdateRepository
 {
-    private readonly KickBetsDbContext _context;
     private readonly IConfiguration _configuration;
+    private readonly KickBetsDbContext _context;
 
     public DbUpdateRepository(KickBetsDbContext context, IConfiguration configuration)
     {
         _context = context;
         _configuration = configuration;
     }
+
     public async Task OnUpdatePerformed(DbUpdate dbUpdate)
     {
         _context.DbUpdates.Add(dbUpdate);
@@ -28,20 +29,22 @@ public class DbUpdateRepository : IDbUpdateRepository
         var sinceLeagueUpdate = leagueUpdate is null ? TimeSpan.MaxValue : DateTime.Now - leagueUpdate.TimeStamp;
         return sinceLeagueUpdate.TotalMinutes > _configuration.GetValue<int>("DbUpdates:Leagues");
     }
-    
+
     public async Task<bool> ShouldPerformFixturesSmallUpdate()
     {
         var updates = _context.DbUpdates.OrderByDescending(x => x.TimeStamp);
         var fixtureSmallUpdate = await updates.FirstOrDefaultAsync(x => x.FixturesSmallUpdate);
-        var sinceFixturesSmallUpdate = fixtureSmallUpdate is null ? TimeSpan.MaxValue : DateTime.Now - fixtureSmallUpdate.TimeStamp;
+        var sinceFixturesSmallUpdate =
+            fixtureSmallUpdate is null ? TimeSpan.MaxValue : DateTime.Now - fixtureSmallUpdate.TimeStamp;
         return sinceFixturesSmallUpdate.TotalMinutes > _configuration.GetValue<int>("DbUpdates:FixturesSmall");
     }
-    
+
     public async Task<bool> ShouldPerformFixturesBigUpdate()
     {
         var updates = _context.DbUpdates.OrderByDescending(x => x.TimeStamp);
         var fixtureBigUpdate = await updates.FirstOrDefaultAsync(x => x.FixturesBigUpdate);
-        var sinceFixturesBigUpdate = fixtureBigUpdate is null ? TimeSpan.MaxValue : DateTime.Now - fixtureBigUpdate.TimeStamp;
+        var sinceFixturesBigUpdate =
+            fixtureBigUpdate is null ? TimeSpan.MaxValue : DateTime.Now - fixtureBigUpdate.TimeStamp;
         return sinceFixturesBigUpdate.TotalMinutes > _configuration.GetValue<int>("DbUpdates:FixturesBig");
     }
 
@@ -49,7 +52,8 @@ public class DbUpdateRepository : IDbUpdateRepository
     {
         var updates = _context.DbUpdates.OrderByDescending(x => x.TimeStamp);
         var statisticsUpdate = await updates.FirstOrDefaultAsync(x => x.StatisticsUpdate);
-        var sinceStatisticsUpdate = statisticsUpdate is null ? TimeSpan.MaxValue : DateTime.Now - statisticsUpdate.TimeStamp;
+        var sinceStatisticsUpdate =
+            statisticsUpdate is null ? TimeSpan.MaxValue : DateTime.Now - statisticsUpdate.TimeStamp;
         return sinceStatisticsUpdate.TotalMinutes > _configuration.GetValue<int>("DbUpdates:Statistics");
     }
 
@@ -60,7 +64,7 @@ public class DbUpdateRepository : IDbUpdateRepository
         var sinceLineupsUpdate = lineupsUpdate is null ? TimeSpan.MaxValue : DateTime.Now - lineupsUpdate.TimeStamp;
         return sinceLineupsUpdate.TotalMinutes > _configuration.GetValue<int>("DbUpdates:Lineups");
     }
-    
+
     public async Task<bool> ShouldPerformEventsUpdate()
     {
         var updates = _context.DbUpdates.OrderByDescending(x => x.TimeStamp);

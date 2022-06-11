@@ -4,5 +4,4 @@ namespace Sobczal1.KickBets.Application.Contracts.Persistence.Bet;
 
 public interface IWdlftBetRepository : IGenericRepository<WdlftBet>
 {
-    
 }

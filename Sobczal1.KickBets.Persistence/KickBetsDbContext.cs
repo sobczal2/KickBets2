@@ -12,25 +12,17 @@ public class KickBetsDbContext : IdentityDbContext<AppUser, IdentityRole<int>, i
 {
     public KickBetsDbContext()
     {
-        
     }
 
     public KickBetsDbContext(DbContextOptions<KickBetsDbContext> options) : base(options)
     {
-        
-    }
-    
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(KickBetsDbContext).Assembly);
-        base.OnModelCreating(modelBuilder);
     }
 
     public DbSet<BetsData> BetsData { get; set; }
     public DbSet<BaseBet> Bets { get; set; }
     public DbSet<WdlhtBet> WdlhtBets { get; set; }
     public DbSet<WdlftBet> WdlftBets { get; set; }
-    
+
     public DbSet<Event> Events { get; set; }
     public DbSet<HomeEvent> HomeEvents { get; set; }
     public DbSet<AwayEvent> AwayEvents { get; set; }
@@ -47,4 +39,10 @@ public class KickBetsDbContext : IdentityDbContext<AppUser, IdentityRole<int>, i
     public DbSet<Team> Teams { get; set; }
     public DbSet<Venue> Venues { get; set; }
     public DbSet<DbUpdate> DbUpdates { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(KickBetsDbContext).Assembly);
+        base.OnModelCreating(modelBuilder);
+    }
 }

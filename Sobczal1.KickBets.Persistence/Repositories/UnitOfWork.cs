@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Sobczal1.KickBets.Application.Contracts.Persistence;
+﻿using Sobczal1.KickBets.Application.Contracts.Persistence;
 using Sobczal1.KickBets.Application.Contracts.Persistence.Bet;
 using Sobczal1.KickBets.Application.Contracts.Persistence.Football;
 using Sobczal1.KickBets.Persistence.Repositories.Bets;
@@ -10,16 +9,9 @@ namespace Sobczal1.KickBets.Persistence.Repositories;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly KickBetsDbContext _context;
-
-    public UnitOfWork(KickBetsDbContext context)
-    {
-        _context = context;
-    }
+    private IBetRepository? _betRepository;
 
     private IBetsDataRepository? _betsDataRepository;
-    private IBetRepository? _betRepository;
-    private IWdlhtBetRepository? _wdlhtBetRepository;
-    private IWdlftBetRepository? _wdlftBetRepository;
     private IEventRepository? _eventRepository;
     private IFixtureRepository? _fixtureRepository;
     private ILeagueRepository? _leagueRepository;
@@ -30,6 +22,13 @@ public class UnitOfWork : IUnitOfWork
     private IStatusRepository? _statusRepository;
     private ITeamRepository? _teamRepository;
     private IVenueRepository? _venueRepository;
+    private IWdlftBetRepository? _wdlftBetRepository;
+    private IWdlhtBetRepository? _wdlhtBetRepository;
+
+    public UnitOfWork(KickBetsDbContext context)
+    {
+        _context = context;
+    }
 
     public IBetsDataRepository BetsDataRepository => _betsDataRepository ??= new BetsDataRepository(_context);
     public IBetRepository BetRepository => _betRepository ??= new BetRepository(_context);
@@ -45,7 +44,7 @@ public class UnitOfWork : IUnitOfWork
     public IStatusRepository StatusRepository => _statusRepository ??= new StatusRepository(_context);
     public ITeamRepository TeamRepository => _teamRepository ??= new TeamRepository(_context);
     public IVenueRepository VenueRepository => _venueRepository ??= new VenueRepository(_context);
-    
+
     public async Task Save()
     {
         await _context.SaveChangesAsync();

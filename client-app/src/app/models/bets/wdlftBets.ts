@@ -1,4 +1,4 @@
-import { BaseDto } from "../common/base"
+import {BaseDto} from "../common/base"
 
 export interface WdlftBetsDataDto extends BaseDto {
     homeBetsMultiplier: number;

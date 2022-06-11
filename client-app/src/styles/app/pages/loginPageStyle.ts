@@ -1,19 +1,22 @@
 export const loginPageStyle = {
-    minHeight: "90vh",
+    position: " absolute",
+    height: "100vh",
+    width: "100vw",
+    top: "0",
+    left: "0",
     backgroundImage: "url(/images/homeBackgroundImage.jpg)",
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-    display: "flex",
-    flexDirection: "column",
-    flexGrow: 1,
-    justifyContent: "center",
-    alignItems: "center"
 }
 
 export const loginPageBoxStyle = {
+    position: "relative",
+    top: "60%",
+    left: "50%",
     width: "50rem",
-    height: "60rem",
+    height: "50rem",
+    transform: "translate(-50%, -50%)",
     backgroundColor: "primary.main",
     borderBottom: "1rem solid",
     borderColor: "secondary.main",

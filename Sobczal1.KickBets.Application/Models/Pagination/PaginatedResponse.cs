@@ -6,12 +6,6 @@ namespace Sobczal1.KickBets.Application.Models.Pagination;
 
 public class PaginatedResponse<T>
 {
-    public int PageSize { get; set; }
-    public int CurrentPage { get; set; }
-    public int TotalResults { get; set; }
-    public int TotalPages { get; set; }
-    public IEnumerable<T> Items { get; set; }
-
     private PaginatedResponse(IEnumerable<T> items, int currentPage, int pageSize, int totalCount)
     {
         PageSize = pageSize;
@@ -20,6 +14,12 @@ public class PaginatedResponse<T>
         TotalPages = (int) Math.Ceiling(TotalResults / (double) PageSize);
         Items = items;
     }
+
+    public int PageSize { get; set; }
+    public int CurrentPage { get; set; }
+    public int TotalResults { get; set; }
+    public int TotalPages { get; set; }
+    public IEnumerable<T> Items { get; set; }
 
     public static async Task<PaginatedResponse<T>> CreateAsync(IQueryable<T> source,
         PaginatedRequestData paginatedRequestData, Expression<Func<T, object>> order, bool reverseOrder = false)
@@ -31,9 +31,9 @@ public class PaginatedResponse<T>
             throw new ValidationErrorsException(validationResult);
 
         var totalCount = await source.CountAsync();
-        
+
         source = reverseOrder ? source.OrderByDescending(order) : source.OrderBy(order);
-        
+
         var items = await source
             .Skip((paginatedRequestData.CurrentPage!.Value - 1) * paginatedRequestData.PageSize!.Value)
             .Take(paginatedRequestData.PageSize.Value).ToListAsync();

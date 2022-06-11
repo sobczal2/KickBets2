@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Sobczal1.KickBets.Application.DTOs.Football.Venues;
+using Sobczal1.KickBets.Application.Features.Venues.Requests.Queries;
 
 namespace Sobczal1.KickBets.Api.Controllers;
 
@@ -14,12 +15,12 @@ public class VenuesController : ControllerBase
     {
         _mediator = mediator;
     }
-    
+
     [HttpGet("{id:int}")]
     public async Task<ActionResult<VenueDto>> GetTeamByFixtureId([FromRoute] int id)
     {
         var venue = await _mediator.Send(
-            new Sobczal1.KickBets.Application.Features.Venues.Requests.Queries.GetVenueByIdQuery {Id = id});
+            new GetVenueByIdQuery {Id = id});
         return Ok(venue);
     }
 }

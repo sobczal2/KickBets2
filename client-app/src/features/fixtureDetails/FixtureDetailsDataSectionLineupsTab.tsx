@@ -1,11 +1,11 @@
-// @flow 
+// @flow
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {FixtureDto} from "../../app/models/football/fixtures";
 import {Box, CircularProgress, Grid, Typography} from "@mui/material";
 import {
     fixtureDetailsDataSectionStatisticsTabOuterBoxStyle
 } from "../../styles/features/fixtureDetails/fixtureDetailsDataSectionStatisticsTabStyle";
-import {useEffect, useState} from "react";
 import {LineupDto} from "../../app/models/football/lineups";
 import agent from "../../app/api/agent";
 import {PlayerDto} from "../../app/models/football/players";
@@ -78,7 +78,9 @@ export const FixtureDetailsDataSectionLineupsTab = ({fixture}: Props) => {
 
     if (loading) {
         return (
-            <Box sx={{
+            <Box
+                id="details-lineups-tab"
+                sx={{
                 ...fixtureDetailsDataSectionStatisticsTabOuterBoxStyle,
                 display: "flex",
                 alignItems: "center",
@@ -91,7 +93,9 @@ export const FixtureDetailsDataSectionLineupsTab = ({fixture}: Props) => {
 
     if (!homeLineup || !awayLineup) {
         return (
-            <Box sx={{
+            <Box
+                id="details-lineups-tab"
+                sx={{
                 ...fixtureDetailsDataSectionStatisticsTabOuterBoxStyle,
                 display: "flex",
                 alignItems: "center",
@@ -108,7 +112,9 @@ export const FixtureDetailsDataSectionLineupsTab = ({fixture}: Props) => {
     }
 
     return (
-        <Box sx={fixtureDetailsDataSectionLineupsTabOuterBoxStyle}>
+        <Box
+            id="details-lineups-tab"
+            sx={fixtureDetailsDataSectionLineupsTabOuterBoxStyle}>
             <Grid container sx={{width: "100%"}}>
                 <Grid item xs={6}>
                     <Box sx={{borderRight: "2px solid", borderColor: "secondary.main", height: "100%"}}>
@@ -126,7 +132,8 @@ export const FixtureDetailsDataSectionLineupsTab = ({fixture}: Props) => {
                                 <Grid item xs={6} sx={fixtureDetailsDataSectionLineupsTabPlayerGridItemStyle}>
                                     Name:
                                 </Grid>
-                                <Grid item xs={4} sx={{...fixtureDetailsDataSectionLineupsTabPlayerGridItemStyle, mb: "1rem"}}>
+                                <Grid item xs={4}
+                                      sx={{...fixtureDetailsDataSectionLineupsTabPlayerGridItemStyle, mb: "1rem"}}>
                                     Position:
                                 </Grid>
                             </>
@@ -158,7 +165,8 @@ export const FixtureDetailsDataSectionLineupsTab = ({fixture}: Props) => {
                                 <Grid item xs={6} sx={fixtureDetailsDataSectionLineupsTabPlayerGridItemStyle}>
                                     Name:
                                 </Grid>
-                                <Grid item xs={4} sx={{...fixtureDetailsDataSectionLineupsTabPlayerGridItemStyle, mb: "1rem"}}>
+                                <Grid item xs={4}
+                                      sx={{...fixtureDetailsDataSectionLineupsTabPlayerGridItemStyle, mb: "1rem"}}>
                                     Position:
                                 </Grid>
                             </>
@@ -200,7 +208,8 @@ export const FixtureDetailsDataSectionLineupsTab = ({fixture}: Props) => {
                                 <Grid item xs={6} sx={fixtureDetailsDataSectionLineupsTabPlayerGridItemStyle}>
                                     Name:
                                 </Grid>
-                                <Grid item xs={4} sx={{...fixtureDetailsDataSectionLineupsTabPlayerGridItemStyle, mb: "1rem"}}>
+                                <Grid item xs={4}
+                                      sx={{...fixtureDetailsDataSectionLineupsTabPlayerGridItemStyle, mb: "1rem"}}>
                                     Position:
                                 </Grid>
                             </>
@@ -232,7 +241,8 @@ export const FixtureDetailsDataSectionLineupsTab = ({fixture}: Props) => {
                                 <Grid item xs={6} sx={fixtureDetailsDataSectionLineupsTabPlayerGridItemStyle}>
                                     Name:
                                 </Grid>
-                                <Grid item xs={4} sx={{...fixtureDetailsDataSectionLineupsTabPlayerGridItemStyle, mb: "1rem"}}>
+                                <Grid item xs={4}
+                                      sx={{...fixtureDetailsDataSectionLineupsTabPlayerGridItemStyle, mb: "1rem"}}>
                                     Position:
                                 </Grid>
                             </>

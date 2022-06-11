@@ -1,5 +1,3 @@
-using System.Globalization;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Sobczal1.KickBets.Api.Middleware;
 using Sobczal1.KickBets.Application;
@@ -17,10 +15,7 @@ builder.Services.ConfigureApplicationServices();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<ApiBehaviorOptions>(options =>
-{
-    options.SuppressModelStateInvalidFilter = true;
-});
+builder.Services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 
 var app = builder.Build();
 
@@ -35,14 +30,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseHttpsRedirection();
-
 app.UseRouting();
 
-app.UseCors(opt =>
-{
-    opt.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().Build();
-});
+app.UseCors(opt => { opt.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().Build(); });
 
 app.UseAuthentication();
 

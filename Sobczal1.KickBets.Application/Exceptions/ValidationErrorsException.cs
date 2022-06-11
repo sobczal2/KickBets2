@@ -5,11 +5,9 @@ namespace Sobczal1.KickBets.Application.Exceptions;
 
 public class ValidationErrorsException : ApplicationErrorException
 {
-    public ValidationErrorsException(ValidationResult validationResult) : base(new Dictionary<string, string>(), HttpStatusCode.BadRequest)
+    public ValidationErrorsException(ValidationResult validationResult) : base(new Dictionary<string, string>(),
+        HttpStatusCode.BadRequest)
     {
-        foreach (var error in validationResult.Errors)
-        {
-            Errors.TryAdd(error.PropertyName, error.ErrorMessage);
-        }
+        foreach (var error in validationResult.Errors) Errors.TryAdd(error.PropertyName, error.ErrorMessage);
     }
 }

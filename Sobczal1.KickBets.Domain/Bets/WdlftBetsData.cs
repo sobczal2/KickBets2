@@ -8,6 +8,7 @@ public class WdlftBetsData : BaseDomainEntity
         DrawBetsValue = 0;
         AwayBetsValue = 0;
     }
+
     public double HomeBetsValue { get; set; }
     public double DrawBetsValue { get; set; }
     public double AwayBetsValue { get; set; }
@@ -18,14 +19,14 @@ public class WdlftBetsData : BaseDomainEntity
             return 1;
         return 1 + (DrawBetsValue + AwayBetsValue) / HomeBetsValue;
     }
-    
+
     public double GetDrawBetsMultiplier()
     {
         if (DrawBetsValue == 0)
             return 1;
         return 1 + (HomeBetsValue + AwayBetsValue) / DrawBetsValue;
     }
-    
+
     public double GetAwayBetsMultiplier()
     {
         if (AwayBetsValue == 0)

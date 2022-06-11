@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sobczal1.KickBets.Application.DTOs.Bets;
+using Sobczal1.KickBets.Application.Features.Bets.Requests.Commands;
+using Sobczal1.KickBets.Application.Features.Bets.Requests.Queries;
 using Sobczal1.KickBets.Application.Models.Pagination;
 
 namespace Sobczal1.KickBets.Api.Controllers;
@@ -22,17 +24,17 @@ public class BetsController : ControllerBase
     public async Task<ActionResult> CreateWdlftBet([FromBody] CreateWdlftBetDto createWdlftBetDto)
     {
         await _mediator.Send(
-            new Sobczal1.KickBets.Application.Features.Bets.Requests.Commands.CreateWdlftBetCommand
+            new CreateWdlftBetCommand
                 {CreateWdlftBetDto = createWdlftBetDto});
         return Ok();
     }
-    
+
     [HttpPost("wdlht")]
     [Authorize]
     public async Task<ActionResult> CreateWdlhtBet([FromBody] CreateWdlhtBetDto createWdlhtBetDto)
     {
         await _mediator.Send(
-            new Sobczal1.KickBets.Application.Features.Bets.Requests.Commands.CreateWdlhtBetCommand
+            new CreateWdlhtBetCommand
                 {CreateWdlhtBetDto = createWdlhtBetDto});
         return Ok();
     }
@@ -43,7 +45,7 @@ public class BetsController : ControllerBase
         [FromQuery] PaginatedRequestData paginatedRequestData)
     {
         var bets = await _mediator.Send(
-            new Sobczal1.KickBets.Application.Features.Bets.Requests.Queries.GetMyBetListQuery
+            new GetMyBetListQuery
                 {PaginatedRequestData = paginatedRequestData});
         return Ok(bets);
     }

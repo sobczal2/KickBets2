@@ -12,10 +12,10 @@ namespace Sobczal1.KickBets.Application.Features.Identity.Handlers.Commands;
 
 public class LoginCommandHandler : IRequestHandler<LoginCommand, UserDto>
 {
-    private readonly UserManager<AppUser> _userManager;
-    private readonly SignInManager<AppUser> _signInManager;
     private readonly IMapper _mapper;
+    private readonly SignInManager<AppUser> _signInManager;
     private readonly TokenService _tokenService;
+    private readonly UserManager<AppUser> _userManager;
 
     public LoginCommandHandler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IMapper mapper,
         TokenService tokenService)
@@ -35,7 +35,8 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, UserDto>
 
         var user = await _userManager.FindByEmailAsync(command.LoginDto.Email);
         if (user == null)
-            throw new BadRequestException(new Dictionary<string, string> {{"Email", "Invalid login and/or password"}, {"Password", "Invalid login and/or password"}});
+            throw new BadRequestException(new Dictionary<string, string>
+                {{"Email", "Invalid login and/or password"}, {"Password", "Invalid login and/or password"}});
 
         var result = await _signInManager.CheckPasswordSignInAsync(user, command.LoginDto.Password, false);
 
@@ -46,6 +47,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, UserDto>
             return userDto;
         }
 
-        throw new BadRequestException(new Dictionary<string, string> {{"Email", "Invalid login and/or password"}, {"Password", "Invalid login and/or password"}});
+        throw new BadRequestException(new Dictionary<string, string>
+            {{"Email", "Invalid login and/or password"}, {"Password", "Invalid login and/or password"}});
     }
 }

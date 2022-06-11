@@ -9,7 +9,9 @@ public class BaseBet : BaseDomainEntity
     public Fixture Fixture { get; set; } = null!;
     public int AppUserId { get; set; }
     public AppUser AppUser { get; set; } = null!;
+
     public double Value { get; set; }
+
     // "pending", "won", "lost" or "cancelled"
     public string Status { get; set; } = null!;
     public DateTime TimeStamp { get; set; }

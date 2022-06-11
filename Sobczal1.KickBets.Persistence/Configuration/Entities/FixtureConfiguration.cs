@@ -17,13 +17,13 @@ public class FixtureConfiguration : IEntityTypeConfiguration<Fixture>
             .WithMany()
             .HasForeignKey(f => f.HomeTeamId)
             .OnDelete(DeleteBehavior.NoAction);
-        
+
         builder
             .HasOne(f => f.AwayTeam)
             .WithMany()
             .HasForeignKey(f => f.AwayTeamId)
             .OnDelete(DeleteBehavior.NoAction);
-        
+
         builder
             .HasOne(f => f.Status)
             .WithOne(s => s.Fixture)
@@ -39,7 +39,7 @@ public class FixtureConfiguration : IEntityTypeConfiguration<Fixture>
             .WithOne(l => l.Fixture)
             .HasForeignKey<Fixture>(f => f.HomeLineupId)
             .OnDelete(DeleteBehavior.NoAction);
-        
+
         builder
             .HasOne(f => f.AwayLineup)
             .WithOne(l => l.Fixture)

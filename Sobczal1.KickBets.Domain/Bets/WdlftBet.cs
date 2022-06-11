@@ -27,7 +27,6 @@ public class WdlftBet : BaseBet
         var cancelledStatuses = new[] {"SUSP", "CANC", "ABD", "AWD", "WO"};
 
         if (endedStatuses.Contains(Fixture.Status.Short))
-        {
             switch (WdlftSide)
             {
                 case "home":
@@ -40,6 +39,7 @@ public class WdlftBet : BaseBet
                     {
                         Status = "lost";
                     }
+
                     break;
                 case "away":
                     if (Fixture.Score.HomeFullTime < Fixture.Score.AwayFullTime)
@@ -51,6 +51,7 @@ public class WdlftBet : BaseBet
                     {
                         Status = "lost";
                     }
+
                     break;
                 case "draw":
                     if (Fixture.Score.HomeFullTime == Fixture.Score.AwayFullTime)
@@ -62,9 +63,9 @@ public class WdlftBet : BaseBet
                     {
                         Status = "lost";
                     }
+
                     break;
             }
-        }
 
         if (cancelledStatuses.Contains(Fixture.Status.Short))
         {

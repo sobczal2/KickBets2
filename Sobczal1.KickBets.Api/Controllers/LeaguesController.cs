@@ -1,7 +1,7 @@
-﻿
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Sobczal1.KickBets.Application.DTOs.Football.Leagues;
+using Sobczal1.KickBets.Application.Features.Leagues.Requests.Queries;
 using Sobczal1.KickBets.Application.Models.Pagination;
 
 namespace Sobczal1.KickBets.Api.Controllers;
@@ -18,20 +18,21 @@ public class LeaguesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<PaginatedResponse<LeagueDto>>> List([FromQuery] PaginatedRequestData paginatedRequestData)
+    public async Task<ActionResult<PaginatedResponse<LeagueDto>>> List(
+        [FromQuery] PaginatedRequestData paginatedRequestData)
     {
         var leagues =
-            await _mediator.Send(new Sobczal1.KickBets.Application.Features.Leagues.Requests.Queries.GetLeagueListQuery
+            await _mediator.Send(new GetLeagueListQuery
                 {PaginatedRequestData = paginatedRequestData});
         return Ok(leagues);
     }
-    
+
     [HttpGet("{id:int}")]
     public async Task<ActionResult<LeagueDto>> GetById([FromRoute] int id)
     {
         var fixture =
             await _mediator.Send(
-                new Sobczal1.KickBets.Application.Features.Leagues.Requests.Queries.GetLeagueByIdQuery{Id = id});
+                new GetLeagueByIdQuery {Id = id});
         return Ok(fixture);
     }
 }

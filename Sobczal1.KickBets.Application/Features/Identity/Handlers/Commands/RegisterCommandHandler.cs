@@ -13,18 +13,20 @@ namespace Sobczal1.KickBets.Application.Features.Identity.Handlers.Commands;
 
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, UserDto>
 {
-    private readonly UserManager<AppUser> _userManager;
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
     private readonly TokenService _tokenService;
+    private readonly UserManager<AppUser> _userManager;
 
-    public RegisterCommandHandler(UserManager<AppUser> userManager, IConfiguration configuration, IMapper mapper, TokenService tokenService)
+    public RegisterCommandHandler(UserManager<AppUser> userManager, IConfiguration configuration, IMapper mapper,
+        TokenService tokenService)
     {
         _userManager = userManager;
         _configuration = configuration;
         _mapper = mapper;
         _tokenService = tokenService;
     }
+
     public async Task<UserDto> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {
         var validator = new RegisterDtoValidator(_userManager);
@@ -36,11 +38,11 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, UserDto>
         {
             UserName = command.RegisterDto.UserName,
             Email = command.RegisterDto.Email,
-            Balance = _configuration.GetValue<int>("UserSettings:StartingBalance"),
+            Balance = _configuration.GetValue<int>("UserSettings:StartingBalance")
         };
 
         var result = await _userManager.CreateAsync(user, command.RegisterDto.Password);
-        
+
         if (result.Succeeded)
         {
             var userDto = _mapper.Map<UserDto>(user);
@@ -50,7 +52,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, UserDto>
 
         throw new BadRequestException(new Dictionary<string, string>
         {
-            {"UserName", "Something went wrong, try again later."}, 
+            {"UserName", "Something went wrong, try again later."},
             {"Email", "Something went wrong, try again later."},
             {"Password", "Something went wrong, try again later."}
         });

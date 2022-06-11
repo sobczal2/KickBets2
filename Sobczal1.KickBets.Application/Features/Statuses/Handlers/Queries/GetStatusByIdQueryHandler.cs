@@ -9,14 +9,15 @@ namespace Sobczal1.KickBets.Application.Features.Statuses.Handlers.Queries;
 
 public class GetStatusByIdQueryHandler : IRequestHandler<GetStatusByIdQuery, StatusDto>
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
     public GetStatusByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
+
     public async Task<StatusDto> Handle(GetStatusByIdQuery query, CancellationToken cancellationToken)
     {
         var status = await _unitOfWork.StatusRepository.Get(query.Id);

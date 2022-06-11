@@ -3,6 +3,7 @@ using Sobczal1.KickBets.Application.DTOs.Football.Scores;
 using Sobczal1.KickBets.Domain.Football;
 using FixtureGoals = Sobczal1.KickBets.Application.Services.ApiFootball.Models.Fixtures.Goals;
 using FixtureScore = Sobczal1.KickBets.Application.Services.ApiFootball.Models.Fixtures.Score;
+
 namespace Sobczal1.KickBets.Application.Profiles;
 
 public class ScoreProfile : Profile

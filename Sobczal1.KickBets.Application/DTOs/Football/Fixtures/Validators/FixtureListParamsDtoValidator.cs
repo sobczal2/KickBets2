@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Sobczal1.KickBets.Application.Contracts.Persistence.Football;
-using Sobczal1.KickBets.Application.DTOs.Football.Players;
 
 namespace Sobczal1.KickBets.Application.DTOs.Football.Fixtures.Validators;
 

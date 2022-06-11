@@ -17,7 +17,7 @@ public class RegisterDtoValidator : AbstractValidator<RegisterDto>
                 return !await userManager.Users.AnyAsync(u => u.UserName.ToUpper() == username.ToUpper());
             })
             .WithMessage("User with {PropertyName} {PropertyValue} already exists");
-        
+
         RuleFor(r => r.Email)
             .NotEmpty()
             .EmailAddress()

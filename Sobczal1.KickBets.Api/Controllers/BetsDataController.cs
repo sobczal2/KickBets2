@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Sobczal1.KickBets.Application.DTOs.Bets;
+using Sobczal1.KickBets.Application.Features.BetsData.Requests.Queries;
 
 namespace Sobczal1.KickBets.Api.Controllers;
 
@@ -20,7 +21,7 @@ public class BetsDataController : ControllerBase
     {
         var betsData =
             await _mediator.Send(
-                new Sobczal1.KickBets.Application.Features.BetsData.Requests.Queries.GetBetsDataByIdQuery {Id = id});
+                new GetBetsDataByIdQuery {Id = id});
         return Ok(betsData);
     }
 }

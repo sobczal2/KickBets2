@@ -10,17 +10,16 @@ using Sobczal1.KickBets.Application.DTOs.Bets;
 using Sobczal1.KickBets.Application.Exceptions;
 using Sobczal1.KickBets.Application.Features.Bets.Requests.Queries;
 using Sobczal1.KickBets.Application.Models.Pagination;
-using Sobczal1.KickBets.Domain.Bets;
 using Sobczal1.KickBets.Domain.Identity;
 
 namespace Sobczal1.KickBets.Application.Features.Bets.Handlers.Queries;
 
 public class GetMyBetListQueryHandler : IRequestHandler<GetMyBetListQuery, PaginatedResponse<BaseBetDto>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly UserManager<AppUser> _userManager;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly UserManager<AppUser> _userManager;
 
     public GetMyBetListQueryHandler(IUnitOfWork unitOfWork, UserManager<AppUser> userManager,
         IHttpContextAccessor httpContextAccessor, IMapper mapper)
@@ -46,10 +45,7 @@ public class GetMyBetListQueryHandler : IRequestHandler<GetMyBetListQuery, Pagin
 
         var toResolveBets = await bets.Where(b => b.Status == "pending").ToListAsync();
 
-        foreach (var toResolveBet in toResolveBets)
-        {
-            toResolveBet.TryResolving();
-        }
+        foreach (var toResolveBet in toResolveBets) toResolveBet.TryResolving();
 
         await _unitOfWork.Save();
 

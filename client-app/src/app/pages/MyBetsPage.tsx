@@ -1,18 +1,16 @@
-// @flow 
+// @flow
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {useStore} from "../stores/store";
 import {Box, Button, Grid} from "@mui/material";
 import {Link} from "react-router-dom";
-import {useEffect, useState} from "react";
 import {BaseBetDto} from "../models/bets/bets";
 import agent from "../api/agent";
 import {MyBetsListItem} from "../../features/myBets/MyBetsListItem";
 
-type Props = {
-    
-};
+type Props = {};
 export const MyBetsPage = (props: Props) => {
-    
+
     const store = useStore()
 
     const [bets, setBets] = useState<BaseBetDto[]>([])
@@ -25,9 +23,8 @@ export const MyBetsPage = (props: Props) => {
             })
 
     }, [])
-    
-    if(!store.identityStore.user)
-    {
+
+    if (!store.identityStore.user) {
         return (
             <Box sx={{width: "100%", py: "10rem", textAlign: "center"}}>
                 <Button
@@ -42,8 +39,7 @@ export const MyBetsPage = (props: Props) => {
         )
     }
 
-    if(bets.length === 0)
-    {
+    if (bets.length === 0) {
         return (
             <Box sx={{width: "100%", py: "10rem", textAlign: "center"}}>
                 <Button
@@ -57,11 +53,11 @@ export const MyBetsPage = (props: Props) => {
             </Box>
         )
     }
-    
+
     return (
         <Grid container sx={{width: "100%", py: "2rem", display: "flex"}}>
             {bets.map((bet, i) => (
-                <MyBetsListItem bet={bet} key={i} />
+                <MyBetsListItem bet={bet} key={i}/>
             ))}
         </Grid>
     );

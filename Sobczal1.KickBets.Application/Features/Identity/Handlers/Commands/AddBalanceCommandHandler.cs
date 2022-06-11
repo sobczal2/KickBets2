@@ -14,13 +14,14 @@ namespace Sobczal1.KickBets.Application.Features.Identity.Handlers.Commands;
 
 public class AddBalanceCommandHandler : IRequestHandler<AddBalanceCommand, UserDto>
 {
-    private readonly UserManager<AppUser> _userManager;
-    private readonly IMapper _mapper;
     private readonly IConfiguration _configuration;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly UserManager<AppUser> _userManager;
 
-    public AddBalanceCommandHandler(UserManager<AppUser> userManager, IMapper mapper, IConfiguration configuration,  IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork)
+    public AddBalanceCommandHandler(UserManager<AppUser> userManager, IMapper mapper, IConfiguration configuration,
+        IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork)
     {
         _userManager = userManager;
         _mapper = mapper;
@@ -28,15 +29,18 @@ public class AddBalanceCommandHandler : IRequestHandler<AddBalanceCommand, UserD
         _httpContextAccessor = httpContextAccessor;
         _unitOfWork = unitOfWork;
     }
+
     public async Task<UserDto> Handle(AddBalanceCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByEmailAsync(_httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Email)
+        var user = await _userManager.FindByEmailAsync(_httpContextAccessor.HttpContext?.User
+            .FindFirst(ClaimTypes.Email)
             ?.Value);
         if (user is null)
             throw new BadRequestException(new Dictionary<string, string> {{"User", "User not found."}});
 
         if (DateTime.Compare(user.BalanceLastAddedAt.AddDays(1), DateTime.Now) > 0)
-            throw new BadRequestException(new Dictionary<string, string> {{"Balance", "Balance addition not yet available."}});
+            throw new BadRequestException(new Dictionary<string, string>
+                {{"Balance", "Balance addition not yet available."}});
 
         user.Balance += _configuration.GetValue<double>("UserSettings:AddBalanceValue");
         user.BalanceLastAddedAt = DateTime.Now;

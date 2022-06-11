@@ -12,7 +12,7 @@ public class BetRepository : GenericRepository<BaseBet>, IBetRepository
     {
         _dbContext = dbContext;
     }
-    
+
     public async Task<IQueryable<BaseBet>> GetAllWithRelatedData()
     {
         return _dbContext.Bets

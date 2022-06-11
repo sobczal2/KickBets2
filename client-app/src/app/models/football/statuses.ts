@@ -1,4 +1,4 @@
-import { BaseDto } from "../common/base";
+import {BaseDto} from "../common/base";
 
 export interface StatusDto extends BaseDto {
     long: string;

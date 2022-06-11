@@ -16,7 +16,7 @@ public class CreateWdlftBetDtoValidator : AbstractValidator<CreateWdlftBetDto>
             .GreaterThan(0)
             .Must((_, value) => value <= user.Balance)
             .WithMessage("Not enough balance.");
-        
+
         RuleFor(b => b.WdlftSide)
             .Must((_, wdlftSide) => wdlftSide is "home" or "away" or "draw")
             .WithMessage("{PropertyName} must be 'home', 'away' or 'draw'.");

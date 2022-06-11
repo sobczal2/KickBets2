@@ -1,18 +1,15 @@
 // @flow
 import * as React from 'react';
-import {
-    Box,
-    Button,
-    CircularProgress,
-    Typography
-} from "@mui/material";
+import {Box, Button, CircularProgress, Typography} from "@mui/material";
 import {
     loginPageBoxStyle,
     loginPageInnerBoxStyle,
-    loginPageStyle, loginPageSubmitBoxStyle, loginPageSubmitButtonStyle,
+    loginPageStyle,
+    loginPageSubmitBoxStyle,
+    loginPageSubmitButtonStyle,
     loginPageTitleTextStyle
 } from "../../styles/app/pages/loginPageStyle";
-import {Field, Form, Formik} from "formik";
+import {Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import * as Yup from "yup";
 import {IdentityField} from "../../features/identity/IdentityField";

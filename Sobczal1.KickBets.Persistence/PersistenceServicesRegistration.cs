@@ -9,7 +9,6 @@ using Microsoft.IdentityModel.Tokens;
 using Sobczal1.KickBets.Application.Contracts.Persistence;
 using Sobczal1.KickBets.Application.Contracts.Persistence.Bet;
 using Sobczal1.KickBets.Application.Contracts.Persistence.Football;
-using Sobczal1.KickBets.Domain;
 using Sobczal1.KickBets.Domain.Identity;
 using Sobczal1.KickBets.Persistence.Repositories;
 using Sobczal1.KickBets.Persistence.Repositories.Bets;
@@ -19,12 +18,12 @@ namespace Sobczal1.KickBets.Persistence;
 
 public static class PersistenceServicesRegistration
 {
-    public static IServiceCollection ConfigurePersistenceServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigurePersistenceServices(this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddDbContext<KickBetsDbContext>(opt =>
         {
-            opt.UseSqlServer(configuration.GetConnectionString("KickBetsConnectionString"));
-            opt.EnableSensitiveDataLogging();
+            opt.UseSqlServer(configuration.GetConnectionString(configuration["CurrentConnectionString"]));
         });
 
         services.AddIdentityCore<AppUser>(opt =>
@@ -38,7 +37,6 @@ public static class PersistenceServicesRegistration
             })
             .AddEntityFrameworkStores<KickBetsDbContext>()
             .AddSignInManager<SignInManager<AppUser>>();
-
 
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -73,7 +71,7 @@ public static class PersistenceServicesRegistration
         services.AddScoped<IVenueRepository, VenueRepository>();
 
         services.AddScoped<IDbUpdateRepository, DbUpdateRepository>();
-        
+
         return services;
     }
 
@@ -84,6 +82,7 @@ public static class PersistenceServicesRegistration
         try
         {
             var context = services.GetRequiredService<KickBetsDbContext>();
+            await context.Database.MigrateAsync();
             var userManager = services.GetRequiredService<UserManager<AppUser>>();
             await SeedUsers(context, userManager);
         }
@@ -100,13 +99,14 @@ public static class PersistenceServicesRegistration
         {
             var users = new List<AppUser>
             {
-                new() {UserName = "Tester", Email = "tester@test.com", Balance = 100, BalanceLastAddedAt = DateTime.Now.AddDays(-1)},
+                new()
+                {
+                    UserName = "Tester", Email = "tester@test.com", Balance = 100000,
+                    BalanceLastAddedAt = DateTime.Now.AddDays(-1)
+                },
             };
 
-            foreach (var user in users)
-            {
-                await userManager.CreateAsync(user, "password");
-            }
+            foreach (var user in users) await userManager.CreateAsync(user, "password");
         }
     }
 }

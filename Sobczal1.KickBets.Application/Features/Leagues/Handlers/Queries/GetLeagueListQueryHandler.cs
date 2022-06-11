@@ -10,15 +10,17 @@ namespace Sobczal1.KickBets.Application.Features.Leagues.Handlers.Queries;
 
 public class GetLeagueListQueryHandler : IRequestHandler<GetLeagueListQuery, PaginatedResponse<LeagueDto>>
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
     public GetLeagueListQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
-    public async Task<PaginatedResponse<LeagueDto>> Handle(GetLeagueListQuery query, CancellationToken cancellationToken)
+
+    public async Task<PaginatedResponse<LeagueDto>> Handle(GetLeagueListQuery query,
+        CancellationToken cancellationToken)
     {
         var leagues = await _unitOfWork.LeagueRepository.GetAll();
         return await PaginatedResponse<LeagueDto>.CreateAsync(

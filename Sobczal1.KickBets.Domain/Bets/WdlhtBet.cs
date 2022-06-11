@@ -4,7 +4,7 @@ public class WdlhtBet : BaseBet
 {
     // "home", "away" or "draw"
     public string WdlhtSide { get; set; } = null!;
-    
+
     public override string GetBetType()
     {
         switch (WdlhtSide)
@@ -19,7 +19,7 @@ public class WdlhtBet : BaseBet
                 throw new InvalidDataException("Bet record corrupted.");
         }
     }
-    
+
     public override void TryResolving()
     {
         if (Status != "pending") return;
@@ -27,7 +27,6 @@ public class WdlhtBet : BaseBet
         var cancelledStatuses = new[] {"SUSP", "CANC", "ABD", "AWD", "WO"};
 
         if (endedStatuses.Contains(Fixture.Status.Short))
-        {
             switch (WdlhtSide)
             {
                 case "home":
@@ -40,6 +39,7 @@ public class WdlhtBet : BaseBet
                     {
                         Status = "lost";
                     }
+
                     break;
                 case "away":
                     if (Fixture.Score.HomeHalfTime < Fixture.Score.AwayHalfTime)
@@ -51,6 +51,7 @@ public class WdlhtBet : BaseBet
                     {
                         Status = "lost";
                     }
+
                     break;
                 case "draw":
                     if (Fixture.Score.HomeHalfTime == Fixture.Score.AwayHalfTime)
@@ -62,9 +63,9 @@ public class WdlhtBet : BaseBet
                     {
                         Status = "lost";
                     }
+
                     break;
             }
-        }
 
         if (cancelledStatuses.Contains(Fixture.Status.Short))
         {
@@ -72,7 +73,7 @@ public class WdlhtBet : BaseBet
             AppUser.Balance += Value;
         }
     }
-    
+
     public override string ToString()
     {
         switch (WdlhtSide)

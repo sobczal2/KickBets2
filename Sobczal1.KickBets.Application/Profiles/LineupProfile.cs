@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Sobczal1.KickBets.Application.DTOs.Football.Lineups;
+using Sobczal1.KickBets.Application.Services.ApiFootball.Models.Lineups;
 using Sobczal1.KickBets.Domain.Football;
+using Player = Sobczal1.KickBets.Application.Services.ApiFootball.Models.Lineups.Player;
 
 namespace Sobczal1.KickBets.Application.Profiles;
 
-using LineupRoot = Sobczal1.KickBets.Application.Services.ApiFootball.Models.Lineups.Root;
-using PlayerRoot = Sobczal1.KickBets.Application.Services.ApiFootball.Models.Lineups.Player;
+using LineupRoot = Root;
+using PlayerRoot = Player;
 
 public class LineupProfile : Profile
 {
@@ -22,7 +24,7 @@ public class LineupProfile : Profile
         CreateMap<LineupRoot, HomeLineup>();
         CreateMap<LineupRoot, AwayLineup>();
 
-        CreateMap<PlayerRoot, Player>()
+        CreateMap<PlayerRoot, Domain.Football.Player>()
             .ForMember(p => p.GridX, opt => opt.MapFrom(q => ConvertPlayerGrid(q.Grid).x))
             .ForMember(p => p.GridY, opt => opt.MapFrom(q => ConvertPlayerGrid(q.Grid).y));
 

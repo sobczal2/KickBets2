@@ -15,13 +15,16 @@ export const FixtureDetailsDataSectionStatisticsTabItem = ({homeTeamText, awayTe
 
     return (
         <>
-            <Grid item xs={2} sx={{...fixtureDetailsDataSectionStatisticsTabItemStyle, ...(first ? {border: "none"} : {})}}>
+            <Grid item xs={2}
+                  sx={{...fixtureDetailsDataSectionStatisticsTabItemStyle, ...(first ? {border: "none"} : {})}}>
                 {homeTeamText}
             </Grid>
-            <Grid item xs={8} sx={{...fixtureDetailsDataSectionStatisticsTabItemStyle, ...(first ? {border: "none"} : {})}}>
+            <Grid item xs={8}
+                  sx={{...fixtureDetailsDataSectionStatisticsTabItemStyle, ...(first ? {border: "none"} : {})}}>
                 {middleText}
             </Grid>
-            <Grid item xs={2} sx={{...fixtureDetailsDataSectionStatisticsTabItemStyle, ...(first ? {border: "none"} : {})}}>
+            <Grid item xs={2}
+                  sx={{...fixtureDetailsDataSectionStatisticsTabItemStyle, ...(first ? {border: "none"} : {})}}>
                 {awayTeamText}
             </Grid>
         </>

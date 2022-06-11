@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 import {PaginatedRequestData, PaginatedResponse} from "../models/common/pagination";
 import {FixtureDto, FixtureListParams} from "../models/football/fixtures";
 import dayjs from "dayjs";
@@ -14,11 +14,11 @@ import {store} from "../stores/store";
 import {VenueDto} from "../models/football/venues";
 import {BaseBetDto, BetsDataDto} from "../models/bets/bets";
 
-axios.defaults.baseURL = 'https://localhost:7103/api'
+axios.defaults.baseURL = 'http://localhost:8000/api'
 
 axios.interceptors.request.use(req => {
     const token = store.identityStore.token
-    if(token) req.headers!.Authorization = `Bearer ${token}`
+    if (token) req.headers!.Authorization = `Bearer ${token}`
     return req
 })
 
@@ -106,9 +106,9 @@ const Identity = {
 }
 
 const Bets = {
-    createWdlhtBet: (fixtureId: number, value: number, wdlhtSide: "home"|"away"|"draw") =>
+    createWdlhtBet: (fixtureId: number, value: number, wdlhtSide: "home" | "away" | "draw") =>
         requests.post("/bets/wdlht", {fixtureId: fixtureId, value: value, wdlhtSide: wdlhtSide}),
-    createWdlftBet: (fixtureId: number, value: number, wdlftSide: "home"|"away"|"draw") =>
+    createWdlftBet: (fixtureId: number, value: number, wdlftSide: "home" | "away" | "draw") =>
         requests.post("/bets/wdlft", {fixtureId: fixtureId, value: value, wdlftSide: wdlftSide}),
     getBetsData: (betsDataId: number) =>
         requests.get<BetsDataDto>(`/betsdata/${betsDataId}`, {}),

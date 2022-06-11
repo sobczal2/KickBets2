@@ -7,17 +7,17 @@ using Sobczal1.KickBets.Application.Features.BetsData.Requests.Queries;
 
 namespace Sobczal1.KickBets.Application.Features.BetsData.Handlers.Queries;
 
-public class GetBetsDataByIdQueryHandler : IRequestHandler<GetBetsDataByIdQuery,  BetsDataDto>
+public class GetBetsDataByIdQueryHandler : IRequestHandler<GetBetsDataByIdQuery, BetsDataDto>
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
     public GetBetsDataByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
-    
+
     public async Task<BetsDataDto> Handle(GetBetsDataByIdQuery query, CancellationToken cancellationToken)
     {
         var betsData = await _unitOfWork.BetsDataRepository.Get(query.Id);

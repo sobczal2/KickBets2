@@ -1,9 +1,9 @@
-// @flow 
+// @flow
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {Box, CircularProgress, LinearProgress, Typography} from "@mui/material";
-import {useEffect, useState} from "react";
 import {FixtureDto, FixtureListParams} from "../../app/models/football/fixtures";
-import {PaginatedRequestData, PaginatedResponseData} from "../../app/models/common/pagination";
+import {PaginatedResponseData} from "../../app/models/common/pagination";
 import agent from "../../app/api/agent";
 import {dashboardListStyle} from "../../styles/features/dashboard/dashboardListStyle";
 import {DashboardListItem} from "./DashboardListItem";
@@ -53,8 +53,8 @@ export const DashboardList = ({fixtureListParams}: Props) => {
     }, [fixtureListParams])
 
     useEffect(() => {
-        setGroupedFixtures(getGroupedFixtures(fixtures, fixtureListParams.type == "ended" || fixtureListParams.type == "cancelled"))
-    }, [fixtures])
+        setGroupedFixtures(getGroupedFixtures(fixtures, fixtureListParams.type === "ended" || fixtureListParams.type === "cancelled"))
+    }, [fixtures, fixtureListParams.type])
 
     if (loading)
         return (

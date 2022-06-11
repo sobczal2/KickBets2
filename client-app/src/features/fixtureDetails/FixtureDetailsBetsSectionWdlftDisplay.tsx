@@ -1,14 +1,20 @@
 // @flow
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {
-    Box, Button, CircularProgress,
+    Box,
+    Button,
+    CircularProgress,
     Dialog,
     DialogContent,
     DialogTitle,
-    FormControl, FormControlLabel,
+    FormControl,
+    FormControlLabel,
     FormLabel,
-    Grid, Radio,
-    RadioGroup, TextField,
+    Grid,
+    Radio,
+    RadioGroup,
+    TextField,
     Typography
 } from "@mui/material";
 import {
@@ -19,7 +25,6 @@ import {
     fixtureDetailsBetsSectionDisplayTitleStyle
 } from "../../styles/features/fixtureDetails/fixtureDetailsBetsSectionStyle";
 import {FixtureDto} from "../../app/models/football/fixtures";
-import {useEffect, useState} from "react";
 import agent from "../../app/api/agent";
 import dayjs from "dayjs";
 import {useStore} from "../../app/stores/store";
@@ -98,33 +103,42 @@ export const FixtureDetailsBetsSectionWdlftDisplay = ({fixture}: Props) => {
                                 onChange={e => setSide(e.target.value as "home" | "draw" | "away")}
                                 sx={{display: "flex", flexDirection: "row"}}
                             >
-                                <FormControlLabel value="home" control={<Radio />} label={`${homeTeamName} win`}/>
+                                <FormControlLabel value="home" control={<Radio/>} label={`${homeTeamName} win`}/>
                                 <FormControlLabel value="draw" control={<Radio/>} label="draw"/>
                                 <FormControlLabel value="away" control={<Radio/>} label={`${awayTeamName} win`}/>
                             </RadioGroup>
                         </FormControl>
                         <TextField
+                            id="wdlft-input-field"
                             value={value}
                             onChange={e => {
-                                if(/^([0-9]+(\.[0-9]+)?|)$/.test(e.target.value))
+                                if (/^([0-9]+(\.[0-9]+)?|)$/.test(e.target.value))
                                     setValue(e.target.value)
                             }}
                             onBlur={() => {
-                                if(value === "")
+                                if (value === "")
                                     setValue("10")
                             }}
-                            // error
-                            // label="Error"
-                            // helperText="Incorrect entry."
                             variant="standard"
                         />
                     </Box>
                     <Box
-                        sx={{display: "flex", width: "100%", flexDirection: "row", justifyContent: "space-between", mt: "1rem"}}
+                        sx={{
+                            display: "flex",
+                            width: "100%",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            mt: "1rem"
+                        }}
                     >
                         <Button
+                            id="wdlft-modal-submit-button"
                             sx={{fontSize: "1.5rem", color: "secondary.main"}}
                             onClick={() => {
+                                if (!store.identityStore.user) {
+                                    toast("Login first!", {type: "error"})
+                                    return
+                                }
                                 setSubmitting(true)
                                 agent.Bets.createWdlftBet(fixture!.id, parseFloat(value), side)
                                     .then(res => {
@@ -139,14 +153,14 @@ export const FixtureDetailsBetsSectionWdlftDisplay = ({fixture}: Props) => {
                                     })
                             }}
                         >
-                            {submitting ? <CircularProgress color="secondary" size="1.5rem" /> : "Submit"}
+                            {submitting ? <CircularProgress color="secondary" size="1.5rem"/> : "Submit"}
                         </Button>
                         <Button
                             onClick={() => {
                                 setModalVisible(false)
                             }
 
-                        }
+                            }
                             sx={{fontSize: "1.5rem", color: "red"}}
                         >
                             Cancel
@@ -156,6 +170,7 @@ export const FixtureDetailsBetsSectionWdlftDisplay = ({fixture}: Props) => {
                 </DialogContent>
             </Dialog>
             <Box
+                id="wdlft-panel"
                 onClick={() => {
                     if (available) setModalVisible(true)
                 }}

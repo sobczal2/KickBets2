@@ -16,14 +16,15 @@ public class TokenService
     {
         _configuration = configuration;
     }
+
     public string CreateToken(AppUser user)
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim("balance", user.Balance.ToString(CultureInfo.CurrentCulture))
+            new(ClaimTypes.Name, user.UserName),
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(ClaimTypes.Email, user.Email),
+            new("balance", user.Balance.ToString(CultureInfo.CurrentCulture))
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Key"]));

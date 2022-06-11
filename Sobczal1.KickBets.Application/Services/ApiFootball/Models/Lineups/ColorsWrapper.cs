@@ -5,6 +5,5 @@ namespace Sobczal1.KickBets.Application.Services.ApiFootball.Models.Lineups;
 
 public class ColorsWrapper : JustId
 {
-    [JsonPropertyName("colors")]
-    public Colors Colors { get; set; }
+    [JsonPropertyName("colors")] public Colors Colors { get; set; }
 }

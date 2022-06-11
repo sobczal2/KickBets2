@@ -5,15 +5,23 @@ import {aboutPageStyle} from "../../styles/app/pages/aboutPageStyle";
 import Particles from "react-tsparticles";
 import {loadFull} from "tsparticles";
 
-type Props = {
-
-};
+type Props = {};
 export const AboutPage = (props: Props) => {
 
     return (
         <Box sx={aboutPageStyle}>
             <Typography
-                sx={{color: "#FFFFFF", position: "absolute", top: "20rem", left: "0", width: "100%", zIndex: "100000", fontSize: "4rem", textAlign: "center", fontWeight: "700"}}
+                sx={{
+                    color: "#FFFFFF",
+                    position: "absolute",
+                    top: "20rem",
+                    left: "0",
+                    width: "100%",
+                    zIndex: "100000",
+                    fontSize: "4rem",
+                    textAlign: "center",
+                    fontWeight: "700"
+                }}
             >
                 KickBets is a simple app that makes it easy for
                 <br/>
@@ -96,7 +104,7 @@ export const AboutPage = (props: Props) => {
                             type: "circle",
                         },
                         size: {
-                            value: { min: 1, max: 5 },
+                            value: {min: 1, max: 5},
                         },
                     },
                     detectRetina: true,

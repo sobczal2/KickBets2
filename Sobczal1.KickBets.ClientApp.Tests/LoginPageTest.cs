@@ -6,45 +6,43 @@ using Xunit;
 
 namespace Sobczal1.KickBets.ClientApp.Tests;
 
-public class LoginPageTest
+public class LoginPageTest : IDisposable
 {
+    public LoginPageTest()
+    {
+        ChromeDriver = new ChromeDriver();
+    }
+
+    public ChromeDriver ChromeDriver { get; set; }
+
+    public void Dispose()
+    {
+        ChromeDriver.Dispose();
+    }
+
     [Fact]
     public void Should_Redirect_OnAboutButtonClicked()
     {
-        var driver = new ChromeDriver();
-        driver.Navigate().GoToUrl("http://localhost:3000/login/");
-        var button = driver.FindElement(By.XPath("//*[text()='Register instead']"));
+        ChromeDriver.Navigate().GoToUrl("http://localhost:3000/login/");
+        var button = ChromeDriver.FindElement(By.XPath("//*[text()='Register instead']"));
         button.Click();
         var expectedUrl = "http://localhost:3000/register";
-        var actualUrl = driver.Url;
-        
-        driver.Dispose();
-        
+        var actualUrl = ChromeDriver.Url;
+
         Assert.Equal(expectedUrl, actualUrl);
     }
 
     [Fact]
     public void Should_Redirect_AfterSuccessfulLogin()
     {
-        var driver = new ChromeDriver();
-        driver.Navigate().GoToUrl("http://localhost:3000/login/");
+        ChromeDriver.Navigate().GoToUrl("http://localhost:3000/login/");
+        
+        TestUtils.Login(ChromeDriver);
 
-        var emailField = driver.FindElement(By.Id("Email"));
-        emailField.SendKeys("tester@test.com");
-        
-        var passwordField = driver.FindElement(By.Id("Password"));
-        passwordField.SendKeys("password");
-        
-        var submitButton = driver.FindElement(By.Id("loginSubmitButton"));
-        submitButton.Click();
-        
-        Thread.Sleep(5000);
         
         var expectedUrl = "http://localhost:3000/fixtures";
-        var actualUrl = driver.Url;
-        
-        driver.Dispose();
-        
+        var actualUrl = ChromeDriver.Url;
+
         Assert.Equal(expectedUrl, actualUrl);
     }
 }

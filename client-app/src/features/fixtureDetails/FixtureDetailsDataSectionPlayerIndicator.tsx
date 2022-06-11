@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
+import {RefObject} from 'react';
 import {Box, Popover, Typography} from "@mui/material";
-import {RefObject} from "react";
 import {PlayerDto} from "../../app/models/football/players";
 
 const popoverStyle = {
@@ -36,7 +36,7 @@ export const FixtureDetailsDataSectionPlayerIndicator = ({color, borderColor, pl
     }
 
     const typographyStyle = {
-        color:`#${color}`,
+        color: `#${color}`,
         filter: "invert(100%)",
         fontSize: "3rem",
         textAlign: "center",

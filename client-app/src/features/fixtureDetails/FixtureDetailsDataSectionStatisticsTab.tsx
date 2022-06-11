@@ -1,11 +1,11 @@
 // @flow
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {Box, CircularProgress, Grid, Typography} from "@mui/material";
 import {FixtureDto} from "../../app/models/football/fixtures";
 import {
     fixtureDetailsDataSectionStatisticsTabOuterBoxStyle
 } from "../../styles/features/fixtureDetails/fixtureDetailsDataSectionStatisticsTabStyle";
-import {useEffect, useState} from "react";
 import {StatisticDto} from "../../app/models/football/statistics";
 import agent from "../../app/api/agent";
 import {FixtureDetailsDataSectionStatisticsTabItem} from "./FixtureDetailsDataSectionStatisticsTabItem";
@@ -45,7 +45,9 @@ export const FixtureDetailsDataSectionStatisticsTab = ({fixture}: Props) => {
 
     if (loading) {
         return (
-            <Box sx={{
+            <Box
+                id="details-statistics-tab"
+                sx={{
                 ...fixtureDetailsDataSectionStatisticsTabOuterBoxStyle,
                 display: "flex",
                 alignItems: "center",
@@ -58,7 +60,9 @@ export const FixtureDetailsDataSectionStatisticsTab = ({fixture}: Props) => {
 
     if (!homeStatistic || !awayStatistic) {
         return (
-            <Box sx={{
+            <Box
+                id="details-statistics-tab"
+                sx={{
                 ...fixtureDetailsDataSectionStatisticsTabOuterBoxStyle,
                 display: "flex",
                 alignItems: "center",
@@ -75,7 +79,9 @@ export const FixtureDetailsDataSectionStatisticsTab = ({fixture}: Props) => {
     }
 
     return (
-        <Box sx={fixtureDetailsDataSectionStatisticsTabOuterBoxStyle}>
+        <Box
+            id="details-statistics-tab"
+            sx={fixtureDetailsDataSectionStatisticsTabOuterBoxStyle}>
             <Grid container sx={{width: "100%"}}>
                 <FixtureDetailsDataSectionStatisticsTabItem
                     homeTeamText={homeStatistic.shotsOnGoal ? homeStatistic.shotsOnGoal.toString() : "0"}
